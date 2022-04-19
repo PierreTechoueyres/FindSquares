@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace SquareFinder;
+﻿namespace SquareFinder;
 
 public static class Program
 {
