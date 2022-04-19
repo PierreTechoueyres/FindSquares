@@ -25,11 +25,10 @@ x y
 Exemple : les coordonnées ci-dessous forment un carré valide
 
 | x  | y  | label |
-|--- |--- |----- |
+| 1  | -4 | A     |
+| 4  | -2 | B     |
 | -1 | -1 | D     |
 | 2  | 1  | C     |
-| 4  | -2 | B     |
-| 1  | -4 | A     |
 
 ![img](Img/example.png)
 
@@ -44,14 +43,6 @@ Dans l&rsquo;exemple précédent si A = (1, -4) et B = (4, -2) alors il est poss
 
     A' = (-1, -1) et A" = (3, -7)
     B' = (2, 1) et B" = (6, -5)
-
-| x  | y  | label           |
-| 1  | -4 | A               |
-| 4  | -2 | B               |
-| -1 | -1 | A&rsquo;        |
-| 2  | 1  | B&rsquo;        |
-| 3  | -7 | A&rsquo;&rsquo; |
-| 6  | -5 | B&rsquo;&rsquo; |
 
 ![img](Img/deuxCarrés.png)
 

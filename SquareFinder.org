@@ -21,12 +21,14 @@ x y
 
   Exemple : les coordonnées ci-dessous forment un carré valide
   #+tblname: example-data
+  |----+----+-------|
   |  x |  y | label |
   |----+----+-------|
+  |  1 | -4 | A     |
+  |  4 | -2 | B     |
   | -1 | -1 | D     |
   |  2 |  1 | C     |
-  |  4 | -2 | B     |
-  |  1 | -4 | A     |
+  |----+----+-------|
 
   #+begin_src gnuplot :var data=example-data :file Img/example.png
 reset
@@ -34,6 +36,11 @@ reset
 set xrange [-2:5]
 set yrange [-5:2]
 set size square
+
+set xzeroaxis
+set yzeroaxis
+set grid
+
 plot data using 1:2 with points notitle , '' using 1:($2+0.25):3 with labels notitle
 #+end_src
 
@@ -51,24 +58,10 @@ plot data using 1:2 with points notitle , '' using 1:($2+0.25):3 with labels not
   A' = (-1, -1) et A" = (3, -7)
   B' = (2, 1) et B" = (6, -5)
   #+end_example
-
-  #+tblname: deux-carrés
-  |----+----+-------|
-  |  x |  y | label |
-  |----+----+-------|
-  |  1 | -4 | A     |
-  |  4 | -2 | B     |
-  |----+----+-------|
-  | -1 | -1 | A'    |
-  |  2 |  1 | B'    |
-  |----+----+-------|
-  |  3 | -7 | A''   |
-  |  6 | -5 | B''   |
-  |----+----+-------|
   
-  #+begin_src gnuplot :var data=deux-carrés :file Img/deuxCarrés.png
+  #+begin_src gnuplot :file Img/deuxCarrés.png
 reset
-set xrange [-3:8]
+set xrange [-3:10]
 set yrange [-9:4]
 set size square
 
@@ -76,9 +69,26 @@ set xtics -8, 1
 set ytics -8, 1
 set xzeroaxis
 set yzeroaxis
+set grid
 
 set title "Deux carrés"
-plot data using 1:2 with points notitle , '' using 1:($2+0.25):3 with labels notitle
+
+set style line 1 \
+    linecolor rgb '#0060ad' \
+    linetype 1 linewidth 2 \
+    pointtype 7 pointsize 1.5
+
+set style line 2 \
+    linecolor rgb '#dd181f' \
+    linetype 1 linewidth 2 \
+    pointtype 5 pointsize 1.5
+
+plot "data/deuxCarrés.txt" \
+     index 0 using 1:2 with linespoints linestyle 1 notitle, \
+     '' index 0 using 1:($2+0.25):3 with labels notitle, \
+     '' index 1 using 1:2 with linespoints linestyle 2 notitle, \
+     '' index 1 using 1:($2+0.25):3 with labels notitle
+
   #+end_src
 
   #+RESULTS:
