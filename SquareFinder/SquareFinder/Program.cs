@@ -24,7 +24,7 @@ public static class Program
 
         var solutions = squareFinder.FindSquares();
         Console.WriteLine($"Found {solutions.Count} !");
-        // Console.WriteLine(String.Join(",\n", solutions));
+        // Console.WriteLine(String.Join("\n", solutions));
 
         return 0;
     }
