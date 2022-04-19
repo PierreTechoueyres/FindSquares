@@ -18,9 +18,9 @@ public static class Program
         Console.WriteLine($"List of points contains {squareFinder.Points.Count} elements.");
         // Console.WriteLine(String.Join(", ", squareFinder.Points));
 
-        Console.WriteLine($"First / last  point {squareFinder.Points.First()}/ {squareFinder.Points.Last()}.");
-        Console.WriteLine($"First / last  x {squareFinder.MinX}/ {squareFinder.MaxX}.");
-        Console.WriteLine($"First / last  y {squareFinder.MinY}/ {squareFinder.MaxY}.");
+        Console.WriteLine($"First / last  point {squareFinder.Points.First()} / {squareFinder.Points.Last()}.");
+        Console.WriteLine($"First / last  x {squareFinder.MinX} / {squareFinder.MaxX}.");
+        Console.WriteLine($"First / last  y {squareFinder.MinY} / {squareFinder.MaxY}.");
 
         var solutions = squareFinder.FindSquares();
         Console.WriteLine($"Found {solutions.Count} !");
