@@ -4,6 +4,7 @@
 - [Réalisation](#ralisation)
   - [Détails](#dtails)
 - [Validation](#validation)
+- [Exécution](#excution)
 - [Améliorations](#amliorations)
 - [Divers](#divers)
 
@@ -56,7 +57,7 @@ Dans l&rsquo;exemple précédent si A = (1, -4) et B = (4, -2) alors il est poss
 
 À partir de cela il est possible de rechercher dans la liste des points s&rsquo;il existe des points correspondants à A&rsquo;, A&rsquo;&rsquo; et B&rsquo;, B&rsquo;&rsquo;.
 
-Si l&rsquo;on décide de trier les points en partant des plus petites valeurs de x et de y jusqu&rsquo;aux plus grandes (d&rsquo;en bas à gauche vers en haut à droite) alors il est possible de ne considérer que les points A&rsquo; et B&rsquo; qui se situent au-dessus de A dans le calcul. Cela est possible car les points situés au dessous sont soit inexistant dans l&rsquo;ensemble des points donnés (le point A est le plus en bas à gauche) soit ont déjà été traités par les itérations précédentes et ont donc déjà été ajoutés à la liste des carrés identifiés.
+Si l&rsquo;on décide de trier les points en partant des plus petites valeurs de x et de y jusqu&rsquo;aux plus grandes (d&rsquo;en bas à gauche vers en haut à droite) alors il est possible de ne considérer que les points A&rsquo; et B&rsquo; qui se situent au-dessus de A dans le calcul. Cela est possible, car les points situés au-dessous sont soit inexistant dans l&rsquo;ensemble des points donnés (le point A est le plus en bas à gauche) soit ont déjà été traités par les itérations précédentes et ont donc déjà été ajoutés à la liste des carrés identifiés.
 
 Cela permet d&rsquo;extraire la formule suivante pour calculer les coordonnées de A&rsquo; et B&rsquo; :
 
@@ -190,6 +191,31 @@ Il y a sans doute une amélioration à ajouter pour détecter ce cas pour évite
 Un ensemble de tests unitaires a été ajouté pour valider les composants séparément.
 
 ![img](./Img/20220419_200712.png)
+
+
+<a id="excution"></a>
+
+# Exécution
+
+Lancement depuis la ligne de commande
+
+```shell
+time dotnet run ../../exercice.txt
+```
+
+```sh
+❯ time dotnet run ../../exercice.txt
+List of points contains 9982 elements.
+First / last  point (-737, -1000) / (394, 999).
+First / last  x -1000 / 999.
+First / last  y -743 / 269.
+Found 56 !
+dotnet run ../../exercice.txt  27,31s user 0,29s system 99% cpu 27,620 total
+╭─    ~/Travail/VCS/BeTomorrow/SquareFinder/SquareFinder    master !3 ?2             ✔  28s  
+╰ 
+```
+
+Ce qui donne 56 carrés trouvés en 28 secondes.
 
 
 <a id="amliorations"></a>

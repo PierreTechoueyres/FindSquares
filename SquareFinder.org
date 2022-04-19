@@ -91,7 +91,7 @@ plot data using 1:2 with points notitle , '' using 1:($2+0.25):3 with labels not
   valeurs de x et de y jusqu'aux plus grandes (d'en bas à gauche vers
   en haut à droite) alors il est possible de ne considérer que les
   points A' et B' qui se situent au-dessus de A dans le calcul. Cela
-  est possible car les points situés au dessous sont soit inexistant
+  est possible, car les points situés au-dessous sont soit inexistant
   dans l'ensemble des points donnés (le point A est le plus en bas à
   gauche) soit ont déjà été traités par les itérations précédentes et
   ont donc déjà été ajoutés à la liste des carrés identifiés. 
@@ -183,6 +183,27 @@ plot data using 1:2 with points notitle , '' using 1:($2+0.25):3 with labels not
   composants séparément.
 
   [[./Img/20220419_200712.png]]
+
+* Exécution
+  Lancement depuis la ligne de commande
+  #+begin_src shell
+time dotnet run ../../exercice.txt
+  #+end_src
+
+  #+RESULT: 
+  #+begin_src sh
+❯ time dotnet run ../../exercice.txt
+List of points contains 9982 elements.
+First / last  point (-737, -1000) / (394, 999).
+First / last  x -1000 / 999.
+First / last  y -743 / 269.
+Found 56 !
+dotnet run ../../exercice.txt  27,31s user 0,29s system 99% cpu 27,620 total
+╭─    ~/Travail/VCS/BeTomorrow/SquareFinder/SquareFinder    master !3 ?2             ✔  28s  
+╰ 
+  #+end_src
+
+  Ce qui donne 56 carrés trouvés en 28 secondes.
 
 * Améliorations
   Pour optimiser le temps d'exécution, j'ai l'intuition qu'il est
