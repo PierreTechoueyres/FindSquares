@@ -1,0 +1,13 @@
+# ReadMe.org -- -*- coding: utf-8 -*-
+#+setupfile: ~/.emacs.d/themes/org-mode-theme/org-code.setup
+#+title:ReadMe
+#+version: 1.0
+#+LANGUAGE: fr
+#+OPTIONS: tex:nil ^:{} html-postamble:nil ':t toc:4
+#+STARTUP: align nolatexpreview
+
+* Overview
+  Simple toy project.
+  No interrest !
+
+# Fin du fichier ReadMe
