@@ -1,0 +1,145 @@
+# SquareFinder.org -- -*- coding: utf-8 -*-
+#+setupfile: ~/.emacs.d/themes/org-mode-theme/readtheorg.setup
+#+title:Recherche de carrés dans un nuage de points
+#+version: 1.0
+#+LANGUAGE: fr
+#+OPTIONS: tex:nil ^:{} html-postamble:nil ':t toc:4
+#+STARTUP: align nolatexpreview
+
+* Demande
+  Soit un fichier contenant un ensemble de points dans un espace à
+  deux dimensions.
+  Le fichier est composé de lignes, chacune d'elle contient un point
+  représenté par ses coordonnées sous la forme suivante :
+  #+begin_src txt
+x y
+  #+end_src
+
+  À partir de l'ensemble de ces points, combien de carrés est-il
+  possible de former.
+  S'il n'y en a pas comment le démontrer ?
+
+  Exemple : les coordonnées ci-dessous forment un carré valide
+  #+begin_example
+-1 -1
+2 1
+4 -2
+1 -4
+  #+end_example
+
+* Analyse
+  Pour chaque coupe de point (A, B) dans le plan il est possible de
+  déterminer quatre autres point A' (1 et 2) et B' (1 et 2) tels qu'à eux 8 ils forment deux carrés.
+
+  Dans l'exemple précédent si A = (-1, -1) et B = (2, 1) alors il est
+  possible de calculer des valeurs pour A' et B' telles qu'il soit
+  possible de former deux carrés.
+  #+begin_example
+  A'1 = (-3, 2) et A'2 = (1, -4)
+  B'1 = (0, 4) et B'2 = (4, -2)
+  #+end_example
+
+  À partir cela il est possible de rechercher dans la liste des points
+  s'il existe des points correspondants à A' et B'.
+
+
+  Si l'on décide de trier les points en partant des plus petites
+  valeurs de x et de y jusqu'aux plus grandes valeurs de x et de y (d'en
+  bas à gauche vers en le haut à droite) alors il est possible de ne
+  considérer que les points A' et B' qui se situent au-dessus de A dans le
+  calcul. Cela permet d'extraire la formule suivante pour calculer
+  les coordonnées de A':
+
+  #+begin_example
+  A'.x = A.x - (B.y - A.y)
+  A'.y = A.y + (B.x - A.x)
+
+  B'.x = B.x - (B.y - A.y)
+  B'.y = B.y + (B.x - a.x)
+  #+end_example
+
+ 
+**  Remarque
+   Le fichier contient des doublons :
+   #+begin_src sh
+❯ cat ../../exercice.txt| sort -n | uniq -dc | wc -l
+18
+❯ cat ../../exercice.txt| sort -n | uniq -dc
+      2 -997 -585
+      2 -895 -593
+      2 -867 673
+      2 -844 -151
+      2 -759 -190
+      2 -615 97
+      2 -380 754
+      2 -289 -146
+      2 -203 -394
+      2 308 847
+      2 331 -818
+      2 366 -960
+      2 383 870
+      2 402 -528
+      2 416 2
+      2 581 188
+      2 773 450
+      2 786 660
+   #+end_src
+
+   J'ai pris le partis de considérer qu'il s'agissait d'une erreur dans
+   le fichier et de ne conserver qu'une seule occurrence.
+
+* Réalisation
+
+  Le langage choisi est le C#.
+
+  L'idée générale est la suivante :
+  1) Lire chaque ligne du fichier et la stocker dans une structure ordonnée,
+  2) Parcourir la structure dans l'ordre
+  3) Pour chaque point, parcourir la suite de la structure et calculer
+     les points possibles pour un carré,
+     1) Vérifier si le point existe
+     2) Ajouter le carré à la liste s'il n'existe pas déjà
+** Détails
+  Les points seront stockés dans un objet =Point= définis comme suit:
+  #+include: SquareFinder/SquareFinder/Point.cs src csharp
+
+  L'idée générale est de stocker l'ensemble des points dans une
+  structure de donnée permettant un accès rapide pour la vérification
+  de la présence des points. Un =SortedSet<Point>= est utilisé avec un
+  =PointComparer= pour trier l'ensemble.
+  #+include: SquareFinder/SquareFinder/PointComparer.cs src csharp
+
+  Les accès au point depuis le =SortedSet= sont garantis en ~O(log n)~
+  par l'implémentation de Microsoft ([[https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.sortedset-1.contains?view=net-6.0][SortedSet<T>.Contains(T) Method]])
+
+  Puis pour chacun des points présent dans le set parcourir l'ensemble
+  des points situés plus avant, calculer les points possibles pour
+  un carré et vérifier s'ils existent.
+
+  Si oui ajouter le carré trouvé à la liste des carrés en triant les
+  sommets par ordre croissant dans le plan (comme pour les points en
+  entrés).
+
+  La liste des carrés trouvés est également un =SortedSet= mais un
+  =SortedSet<Square>=. Cela permet de ne pas créer de doublons lors de
+  du parcours. En effet lors du parcours, B et A' seront présent dans
+  le parcours. Il y a sans doute une amélioration à ajouter pour
+  détecter ce cas pour éviter d'avoir recours à cette structure de
+  donnée.
+
+* Validation
+  Un ensemble de tests unitaires a été ajouté pour valider les
+  composants séparément.
+
+* Améliorations
+  J'ai l'intuition qu'il est possible d'arrêter les parcours des
+  points A et B en utilisant les propriétés du plan (min et max des
+  coordonnées) mais je n'ai pas réussi à trouver comment.
+
+  J'ai exclu les améliorations suivantes :
+  - Détecter que tous les points sont sur la même droite (le cas n'est
+    pas présent dans le fichier)
+  - Détecter qu'il n'y a pas assez de points pour former un carré (le
+    parcours étant très rapide dans ce cas-là ce n'est sans doute pas utile)
+
+# Fin du fichier SquareFinder

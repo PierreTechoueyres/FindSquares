@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
+<head>
+<!-- 2022-04-19 mar. 15:19 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Recherche de carrés dans un nuage de points</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Pierre Téchoueyres" />
+<link rel="stylesheet" type="text/css" href="https://PierreTechoueyres.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="https://PierreTechoueyres.github.io/org-html-themes/src/readtheorg_theme/css/readtheorg.css"/>
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700|Inconsolata:400,700" />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://PierreTechoueyres.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js"></script>
+<script type="text/javascript" src="https://PierreTechoueyres.github.io/org-html-themes/src/readtheorg_theme/js/readtheorg.js"></script>
+<style type="text/css">.linenr{color:lightgray;}#content {max-width: 100%!important;}</style>
+<style type="text/css">
+<!--/*--><![CDATA[/*><!--*/
+.title  { text-align: center;
+margin-bottom: .2em; }
+.subtitle { text-align: center;
+font-size: medium;
+font-weight: bold;
+margin-top:0; }
+.todo   { font-family: monospace; color: red; }
+.done   { font-family: monospace; color: green; }
+.priority { font-family: monospace; color: orange; }
+.tag    { background-color: #eee; font-family: monospace;
+padding: 2px; font-size: 80%; font-weight: normal; }
+.timestamp { color: #bebebe; }
+.timestamp-kwd { color: #5f9ea0; }
+.org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+.org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+.org-center { margin-left: auto; margin-right: auto; text-align: center; }
+.underline { text-decoration: underline; }
+#postamble p, #preamble p { font-size: 90%; margin: .2em; }
+p.verse { margin-left: 3%; }
+table[name="mentions_légales_tbl"] { display: none; }
+pre {
+border: 1px solid #ccc;
+box-shadow: 3px 3px 3px #eee;
+padding: 8pt;
+font-family: monospace;
+overflow: auto;
+margin: 1.2em;
+}
+code { display: inline; max-width: 100%; overflow-x: auto; }
+pre.src { position: relative; /* overflow: visible; */ padding-top: 1.2em; max-height: 500px; overflow-y: auto }
+pre.src:before { display: none; position: absolute; background-color: white;
+top: -10px; right: 10px; padding: 3px; border: 1px solid black;
+padding-top: 0.8em; border: none; font-weight: bold; color: blue; }
+pre.src:hover:before { display: inline;}
+/* Languages per Org manual */
+pre.src-asymptote:before             { content: 'Asymptote'; }
+pre.src-awk:before                   { content: 'Awk'; }
+pre.src-C:before                     { content: 'C'; }
+/* pre.src-C++ doesn't work in CSS */
+pre.src-clojure:before               { content: 'Clojure'; }
+pre.src-css:before                   { content: 'CSS'; }
+pre.src-D:before                     { content: 'D'; }
+pre.src-ditaa:before                 { content: 'ditaa'; }
+pre.src-dot:before                   { content: 'Graphviz'; }
+pre.src-calc:before                  { content: 'Emacs Calc'; }
+pre.src-compilation:before           { content: 'Compilation'; }
+pre.src-emacs-lisp:before            { content: 'Emacs Lisp'; }
+pre.src-fortran:before               { content: 'Fortran'; }
+pre.src-gnuplot:before               { content: 'gnuplot'; }
+pre.src-haskell:before               { content: 'Haskell'; }
+pre.src-java:before                  { content: 'Java'; }
+pre.src-js:before                    { content: 'Javascript'; }
+pre.src-json:before                  { content: 'JSON'; }
+pre.src-latex:before                 { content: 'LaTeX'; }
+pre.src-ledger:before                { content: 'Ledger'; }
+pre.src-lisp:before                  { content: 'Lisp'; }
+pre.src-lilypond:before              { content: 'Lilypond'; }
+pre.src-lua:before                   { content: 'Lua'; }
+pre.src-matlab:before                { content: 'MATLAB'; }
+pre.src-mscgen:before                { content: 'Mscgen'; }
+pre.src-ocaml:before                 { content: 'Objective Caml'; }
+pre.src-octave:before                { content: 'Octave'; }
+pre.src-org:before                   { content: 'Org mode'; }
+pre.src-oz:before                    { content: 'OZ'; }
+pre.src-plantuml:before              { content: 'Plantuml'; }
+pre.src-processing:before            { content: 'Processing.js'; }
+pre.src-python:before                { content: 'Python'; }
+pre.src-R:before                     { content: 'R'; }
+pre.src-ruby:before                  { content: 'Ruby'; }
+pre.src-sass:before                  { content: 'Sass'; }
+pre.src-scheme:before                { content: 'Scheme'; }
+pre.src-screen:before                { content: 'Gnu Screen'; }
+pre.src-sed:before                   { content: 'Sed'; }
+pre.src-sh:before                    { content: 'shell'; }
+pre.src-sql:before                   { content: 'SQL'; }
+pre.src-sqlite:before                { content: 'SQLite'; }
+pre.src-sqlldr:before                { content: 'SQL*Loader'; }
+/* additional languages in org.el's org-babel-load-languages alist */
+pre.src-forth:before                 { content: 'Forth'; }
+pre.src-io:before                    { content: 'IO'; }
+pre.src-J:before                     { content: 'J'; }
+pre.src-makefile:before              { content: 'Makefile'; }
+pre.src-maxima:before                { content: 'Maxima'; }
+pre.src-perl:before                  { content: 'Perl'; }
+pre.src-picolisp:before              { content: 'Pico Lisp'; }
+pre.src-scala:before                 { content: 'Scala'; }
+pre.src-shell:before                 { content: 'Shell Script'; }
+pre.src-ebnf2ps:before               { content: 'ebfn2ps'; }
+/* additional language identifiers per "defun org-babel-execute"
+in ob-*.el */
+pre.src-cpp:before                   { content: 'C++'; }
+pre.src-abc:before                   { content: 'ABC'; }
+pre.src-coq:before                   { content: 'Coq'; }
+pre.src-groovy:before                { content: 'Groovy'; }
+/* additional language identifiers from org-babel-shell-names in
+ob-shell.el: ob-shell is the only babel language using a lambda to put
+the execution function name together. */
+pre.src-bash:before                  { content: 'bash'; }
+pre.src-csh:before                   { content: 'csh'; }
+pre.src-ash:before                   { content: 'ash'; }
+pre.src-dash:before                  { content: 'dash'; }
+pre.src-ksh:before                   { content: 'ksh'; }
+pre.src-mksh:before                  { content: 'mksh'; }
+pre.src-posh:before                  { content: 'posh'; }
+pre.src-powershell:before            { content: 'PowerShell'; }
+/* Additional Emacs modes also supported by the LaTeX listings package */
+pre.src-ada:before                   { content: 'Ada'; }
+pre.src-asm:before                   { content: 'Assembler'; }
+pre.src-caml:before                  { content: 'Caml'; }
+pre.src-delphi:before                { content: 'Delphi'; }
+pre.src-html:before                  { content: 'HTML'; }
+pre.src-idl:before                   { content: 'IDL'; }
+pre.src-mercury:before               { content: 'Mercury'; }
+pre.src-metapost:before              { content: 'MetaPost'; }
+pre.src-modula-2:before              { content: 'Modula-2'; }
+pre.src-pascal:before                { content: 'Pascal'; }
+pre.src-ps:before                    { content: 'PostScript'; }
+pre.src-prolog:before                { content: 'Prolog'; }
+pre.src-simula:before                { content: 'Simula'; }
+pre.src-tcl:before                   { content: 'tcl'; }
+pre.src-tex:before                   { content: 'TeX'; }
+pre.src-plain-tex:before             { content: 'Plain TeX'; }
+pre.src-verilog:before               { content: 'Verilog'; }
+pre.src-vhdl:before                  { content: 'VHDL'; }
+pre.src-xml:before                   { content: 'XML'; }
+pre.src-nxml:before                  { content: 'XML'; }
+/* add a generic configuration mode; LaTeX export needs an additional
+(add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+pre.src-conf:before                  { content: 'Configuration File'; }
+pre.src-conf-unix:before             { content: 'Configuration File'; }
+pre.src-conf-colon:before            { content: 'Configuration File'; }
+pre.src-bat:before                   { content: 'DOS/Windows batch file'; }
+pre.src-java-manifest-generic:before { content: 'Java-Manifest-Generic'; }
+pre.src-csharp:before                { content: 'C#'; }
+pre.src-csv:before                   { content: 'CSV'; }
+pre.src-restclient:before            { content: 'REST Client'; }
+
+table { border-collapse:collapse; }
+caption.t-above { caption-side: top; }
+caption.t-bottom { caption-side: bottom; }
+td, th { vertical-align:top;  }
+th.org-right  { text-align: right;  }
+th.org-left   { text-align: left;   }
+th.org-center { text-align: center; }
+td.org-right  { text-align: right;  }
+td.org-left   { text-align: left;   }
+td.org-center { text-align: center; }
+dt { font-weight: bold; }
+.footpara { display: inline; }
+.footdef  { margin-bottom: 1em; }
+.figure { padding: 1em; }
+.figure p { text-align: center; }
+.inlinetask {
+padding: 10px;
+border: 2px solid gray;
+margin: 10px;
+background: #ffffcc;
+}
+#org-div-home-and-up
+{ text-align: right; font-size: 70%; white-space: nowrap; }
+textarea { overflow-x: auto; }
+.linenr { font-size: smaller }
+.code-highlighted { background-color: #ffff00; }
+.org-info-js_info-navigation { border-style: none; }
+#org-info-js_console-label
+{ font-size: 10px; font-weight: bold; white-space: nowrap; }
+.org-info-js_search-highlight
+{ background-color: #ffff00; color: #000000; font-weight: bold; }
+.org-svg { width: 90%; }
+li>ul { margin: unset; }
+table thead { background: #c9c9c9; }
+table tr:nth-child(2n-1) td{ background-color:white; }
+table tr:nth-child(2n) td{ background-color:#f3f6f6; }
+.org-restclient-file-upload { /* restclient-file-upload-face */ color: #2a486a; }
+.org-restclient-header-name { /* restclient-header-name-face */ color: #00538b; }
+.org-restclient-header-value { /* restclient-header-value-face */ color: #2544bb; }
+.org-restclient-method { /* restclient-method-face */ color: #5317ac; }
+.org-restclient-request-hook { /* restclient-request-hook-face */ color: #a0132f; }
+.org-restclient-request-hook-args { /* restclient-request-hook-args-face */ color: #2544bb; }
+.org-restclient-request-hook-name { /* restclient-request-hook-name-face */ color: #721045; }
+.org-restclient-url { /* restclient-url-face */ color: #721045; }
+.org-restclient-variable-elisp { /* restclient-variable-elisp-face */ color: #721045; }
+.org-restclient-variable-multiline { /* restclient-variable-multiline-face */ color: #2a486a; }
+.org-restclient-variable-name { /* restclient-variable-name-face */ color: #a0132f; }
+.org-restclient-variable-string { /* restclient-variable-string-face */ color: #2544bb; }
+.org-restclient-variable-usage { /* restclient-variable-usage-face */ color: #a0132f; }
+/*]]>*/-->
+</style>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Recherche de carrés dans un nuage de points</h1>
+<div id="table-of-contents">
+<h2>Table des matières</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#demande">1. Demande</a></li>
+<li><a href="#analyse">2. Analyse</a></li>
+<li><a href="#ralisation">3. Réalisation</a></li>
+<li><a href="#validation">4. Validation</a></li>
+<li><a href="#amliorations">5. Améliorations</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-demande" class="outline-2">
+<h2 id="demande"><span class="section-number-2">1.</span> Demande</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Soit un fichier contenant un ensemble de points dans un espace à
+deux dimensions.
+Le fichier est composé de lignes, chacune d&rsquo;elle contient un point
+représenté par ses coordonnées sous la forme suivante :
+</p>
+<div class="org-src-container">
+<pre class="src src-txt">x y
+</pre>
+</div>
+
+<p>
+À partir de l&rsquo;ensemble de ces points, combien de carrés est-il
+possible de former.
+S&rsquo;il n&rsquo;y en a pas comment le démontrer ?
+</p>
+
+<p>
+Exemple : les coordonnées ci-dessous forment un carré valide
+</p>
+<pre class="example" id="org1dd7396">
+-1 -1
+2 1
+4 -2
+1 -4
+</pre>
+</div>
+</div>
+
+<div id="outline-container-analyse" class="outline-2">
+<h2 id="analyse"><span class="section-number-2">2.</span> Analyse</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Pour chaque coupe de point (A, B) dans le plan il est possible de
+déterminer quatre autres point A&rsquo; (1 et 2) et B&rsquo; (1 et 2) tels qu&rsquo;à eux 8 ils formment deux carrés. 
+</p>
+
+<p>
+Dans l&rsquo;exemple précédent si A = (-1, -1) et B = (2, 1) alors il est
+possible de calculer des valeurs pour A&rsquo; et B&rsquo; telles qu&rsquo;il soit
+possible de former deux carrés.
+</p>
+<pre class="example" id="orgba83eaa">
+  A'1 = (-3, 2) et A'2 = (1, -4)
+  B'1 = (0, 4) et B'2 = (4, -2)
+</pre>
+
+<p>
+À partir cela il est possible de rechercher dans la liste des points
+s&rsquo;il existe des points correspondants à A&rsquo; et B&rsquo;.
+</p>
+
+
+<p>
+Si l&rsquo;on décide de trier les points en partant des plus petites
+valeur de x et de y jusqu&rsquo;aux plus grandes valeur de x et de y (d&rsquo;en
+bas à gauche vers en le haut à droite) alors il est possible de ne
+considérer que les points A&rsquo; et B&rsquo; qui se au dessus de A dans le
+calcul. Ce qui permet d&rsquo;extraire la formule suivante pour calculer
+les coordonnées de A&rsquo;: 
+</p>
+
+<pre class="example" id="org5bdc34e">
+  A'.x = A.x - (B.y - A.y)
+  A'.y = A.y + (B.x - A.x)
+
+  B'.x = B.x - (B.y - A.y)
+  B'.y = B.y + (B.x - a.x)
+</pre>
+
+<p>
+Remarque :
+Le fichier contient des doublons :
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">&#10095; cat ../../exercice.txt| sort -n | uniq -dc | wc -l
+18
+&#10095; cat ../../exercice.txt| sort -n | uniq -dc
+      2 -997 -585
+      2 -895 -593
+      2 -867 673
+      2 -844 -151
+      2 -759 -190
+      2 -615 97
+      2 -380 754
+      2 -289 -146
+      2 -203 -394
+      2 308 847
+      2 331 -818
+      2 366 -960
+      2 383 870
+      2 402 -528
+      2 416 2
+      2 581 188
+      2 773 450
+      2 786 660
+</pre>
+</div>
+
+<p>
+J&rsquo;ai pris le partis de considérer qu&rsquo;il s&rsquo;agissait d&rsquo;une erreur dans
+le fichier et de ne conserver qu&rsquo;un seule occurence 
+</p>
+</div>
+</div>
+<div id="outline-container-ralisation" class="outline-2">
+<h2 id="ralisation"><span class="section-number-2">3.</span> Réalisation</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Le language choisi est le C#.
+</p>
+
+<p>
+L&rsquo;idée générale est la suivante :
+</p>
+<ol class="org-ol">
+<li>Lire chaque ligne du fichier et la stocker dans une structure ordonnée,</li>
+<li>Parcourir la structure dans l&rsquo;ordre</li>
+<li>Pour chaque point, parcourir la suite de la structure et calculer
+les points possibles pour un carré,
+<ol class="org-ol">
+<li>Vérifier si le point exite</li>
+<li>Ajouter le carré à la liste s&rsquo;il n&rsquo;existe pas déjà</li>
+</ol></li>
+</ol>
+
+
+<p>
+Les points seront stockés dans un objet <code>Point</code> définis comme suit:
+</p>
+<div class="org-src-container">
+<pre class="src src-csharp"><span class="org-keyword">namespace</span> <span class="org-variable-name">SquareFinder</span>;
+
+<span class="org-keyword">public</span> <span class="org-keyword">class</span> <span class="org-type">Point</span>
+{
+    <span class="org-keyword">public</span> <span class="org-function-name">Point</span>()
+    {
+    }
+   
+    <span class="org-keyword">public</span> <span class="org-function-name">Point</span>(<span class="org-type">int</span> <span class="org-variable-name">x</span>, <span class="org-type">int</span> <span class="org-variable-name">y</span>)
+    {
+        X = x;
+        Y = y;
+    }
+    <span class="org-keyword">public</span> <span class="org-function-name">Point</span>(<span class="org-type">Point</span> <span class="org-variable-name">a</span>)
+    {
+        X = a.X;
+        Y = a.Y;
+    }
+
+    <span class="org-keyword">public</span> <span class="org-keyword">override</span> <span class="org-type">string</span> <span class="org-function-name">ToString</span>()
+    {
+        <span class="org-keyword">return</span> $<span class="org-string">"({X} ; {Y})"</span>;
+    }
+
+    <span class="org-keyword">public</span> <span class="org-type">int</span> <span class="org-variable-name">X</span> { <span class="org-keyword">get</span>; <span class="org-keyword">set</span>; }
+    <span class="org-keyword">public</span> <span class="org-type">int</span> <span class="org-variable-name">Y</span> { <span class="org-keyword">get</span>; <span class="org-keyword">set</span>; }
+}
+</pre>
+</div>
+
+<p>
+L&rsquo;idée générale est de stocker l&rsquo;ensemble des points dans une
+structure de donnée permettant un accès rapipde pour la vérification
+de la présence des points. Un <code>SortedSet&lt;Point&gt;</code> est utilisé avec un
+<code>PointComparer</code> pour trier l&rsquo;ensemble.
+</p>
+
+<p>
+Les accès au point depuis le <code>SortedSet</code> sont garantis en <code>O(log n)</code>
+par l&rsquo;implémentation de Microsoft (<a href="https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.sortedset-1.contains?view=net-6.0">SortedSet&lt;T&gt;.Contains(T) Method</a>)
+</p>
+
+<p>
+Puis pour chacun des points présent dans le set parcourir l&rsquo;ensemble
+des points situés plus avant, calculer les points possibles pour
+un carré et vérifier s&rsquo;ils existent.
+</p>
+
+<p>
+Si oui ajouter le carré trouvé à la liste des carés en triant les
+sommets par odre croissant dans le plan (comme pour les points en
+entrés).
+</p>
+
+<p>
+La liste des carrés trouvés est également un <code>SortedSet</code> mais un
+<code>SortedSet&lt;Square&gt;</code>. Cela permet de ne pas créer de doublons lors de
+du parcours. En effet lors du parcours, B et A&rsquo; seront présent dans
+le parcours. Il y a sans doute une amélioration à ajouter pour
+détecter ce cas pour éviter d&rsquo;avoir recour à cette structure de
+donnée.
+</p>
+</div>
+</div>
+
+<div id="outline-container-validation" class="outline-2">
+<h2 id="validation"><span class="section-number-2">4.</span> Validation</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+Un ensemble de tests unitaires a été ajouté pour valider les
+composants séparéments.
+</p>
+</div>
+</div>
+
+<div id="outline-container-amliorations" class="outline-2">
+<h2 id="amliorations"><span class="section-number-2">5.</span> Améliorations</h2>
+<div class="outline-text-2" id="text-5">
+</div>
+</div>
+</div>
+</body>
+</html>
