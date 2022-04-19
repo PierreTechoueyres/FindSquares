@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
 <head>
-<!-- 2022-04-19 mar. 21:11 -->
+<!-- 2022-04-19 mar. 22:05 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Recherche de carrés dans un nuage de points</title>
@@ -301,7 +301,7 @@ Exemple : les coordonnées ci-dessous forment un carré valide
 </table>
 
 
-<div id="orgd2a531a" class="figure">
+<div id="org5e6c2cb" class="figure">
 <p><img src="Img/example.png" alt="example.png" />
 </p>
 </div>
@@ -312,16 +312,16 @@ Exemple : les coordonnées ci-dessous forment un carré valide
 <h2 id="analyse"><span class="section-number-2">2.</span> Analyse</h2>
 <div class="outline-text-2" id="text-2">
 <p>
-Pour chaque coupe de point (A, B) dans le plan il est possible de
-déterminer quatre autres point A&rsquo; (1 et 2) et B&rsquo; (1 et 2) tels qu&rsquo;à eux 8 ils forment deux carrés.
+Pour chaque coupe de points (A, B) dans le plan il est possible de
+déterminer quatre autres point A&rsquo;, A&rsquo;&rsquo; et B&rsquo;, B&rsquo;&rsquo; tels qu&rsquo;à eux 8 ils forment deux carrés.
 </p>
 
 <p>
 Dans l&rsquo;exemple précédent si A = (1, -4) et B = (4, -2) alors il est
-possible de calculer des valeurs pour A&rsquo; et B&rsquo; telles qu&rsquo;il soit
+possible de calculer des valeurs pour A&rsquo;, A&rsquo;&rsquo; et B&rsquo;, B&rsquo;&rsquo; telles qu&rsquo;il soit
 possible de former deux carrés.
 </p>
-<pre class="example" id="org88ea865">
+<pre class="example" id="orge891e42">
   A' = (-1, -1) et A" = (3, -7)
   B' = (2, 1) et B" = (6, -5)
 </pre>
@@ -385,26 +385,33 @@ possible de former deux carrés.
 </table>
 
 
-<div id="orgcd094ce" class="figure">
+<div id="org8029106" class="figure">
 <p><img src="Img/deuxCarrés.png" alt="deuxCarrés.png" />
 </p>
 </div>
 
 <p>
 À partir de cela il est possible de rechercher dans la liste des points
-s&rsquo;il existe des points correspondants à A&rsquo; et B&rsquo;.
+s&rsquo;il existe des points correspondants à A&rsquo;, A&rsquo;&rsquo; et B&rsquo;, B&rsquo;&rsquo;.
 </p>
 
 <p>
 Si l&rsquo;on décide de trier les points en partant des plus petites
-valeurs de x et de y jusqu&rsquo;aux plus grandes valeurs de x et de y (d&rsquo;en
-bas à gauche vers en haut à droite) alors il est possible de ne
-considérer que les points A&rsquo; et B&rsquo; qui se situent au-dessus de A dans le
-calcul. Cela permet d&rsquo;extraire la formule suivante pour calculer
-les coordonnées de A&rsquo;:
+valeurs de x et de y jusqu&rsquo;aux plus grandes (d&rsquo;en bas à gauche vers
+en haut à droite) alors il est possible de ne considérer que les
+points A&rsquo; et B&rsquo; qui se situent au-dessus de A dans le calcul. Cela
+est possible car les points situés au dessous sont soit inexistant
+dans l&rsquo;ensemble des points donnés (le point A est le plus en bas à
+gauche) soit ont déjà été traités par les itérations précédentes et
+ont donc déjà été ajoutés à la liste des carrés identifiés. 
 </p>
 
-<pre class="example" id="orgd35d60f">
+<p>
+Cela permet d&rsquo;extraire la formule suivante pour calculer
+les coordonnées de A&rsquo; et B&rsquo; :
+</p>
+
+<pre class="example" id="org5256582">
   A'.x = A.x - (B.y - A.y)
   A'.y = A.y + (B.x - A.x)
 
@@ -579,7 +586,7 @@ composants séparément.
 </p>
 
 
-<div id="org8291ccd" class="figure">
+<div id="org43853ee" class="figure">
 <p><img src="./Img/20220419_200712.png" alt="20220419_200712.png" />
 </p>
 </div>
@@ -615,7 +622,7 @@ parcours étant très rapide dans ce cas-là ce n&rsquo;est sans doute pas utile
 Visualisation des données founies dans le fichier <code>exercice.txt</code>:
 </p>
 
-<div id="org81142c7" class="figure">
+<div id="org565ae27" class="figure">
 <p><img src="Img/exercice.png" alt="exercice.png" />
 </p>
 </div>

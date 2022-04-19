@@ -37,9 +37,9 @@ Exemple : les coordonnées ci-dessous forment un carré valide
 
 # Analyse
 
-Pour chaque coupe de point (A, B) dans le plan il est possible de déterminer quatre autres point A&rsquo; (1 et 2) et B&rsquo; (1 et 2) tels qu&rsquo;à eux 8 ils forment deux carrés.
+Pour chaque coupe de points (A, B) dans le plan il est possible de déterminer quatre autres point A&rsquo;, A&rsquo;&rsquo; et B&rsquo;, B&rsquo;&rsquo; tels qu&rsquo;à eux 8 ils forment deux carrés.
 
-Dans l&rsquo;exemple précédent si A = (1, -4) et B = (4, -2) alors il est possible de calculer des valeurs pour A&rsquo; et B&rsquo; telles qu&rsquo;il soit possible de former deux carrés.
+Dans l&rsquo;exemple précédent si A = (1, -4) et B = (4, -2) alors il est possible de calculer des valeurs pour A&rsquo;, A&rsquo;&rsquo; et B&rsquo;, B&rsquo;&rsquo; telles qu&rsquo;il soit possible de former deux carrés.
 
     A' = (-1, -1) et A" = (3, -7)
     B' = (2, 1) et B" = (6, -5)
@@ -54,9 +54,11 @@ Dans l&rsquo;exemple précédent si A = (1, -4) et B = (4, -2) alors il est poss
 
 ![img](Img/deuxCarrés.png)
 
-À partir de cela il est possible de rechercher dans la liste des points s&rsquo;il existe des points correspondants à A&rsquo; et B&rsquo;.
+À partir de cela il est possible de rechercher dans la liste des points s&rsquo;il existe des points correspondants à A&rsquo;, A&rsquo;&rsquo; et B&rsquo;, B&rsquo;&rsquo;.
 
-Si l&rsquo;on décide de trier les points en partant des plus petites valeurs de x et de y jusqu&rsquo;aux plus grandes valeurs de x et de y (d&rsquo;en bas à gauche vers en haut à droite) alors il est possible de ne considérer que les points A&rsquo; et B&rsquo; qui se situent au-dessus de A dans le calcul. Cela permet d&rsquo;extraire la formule suivante pour calculer les coordonnées de A&rsquo;:
+Si l&rsquo;on décide de trier les points en partant des plus petites valeurs de x et de y jusqu&rsquo;aux plus grandes (d&rsquo;en bas à gauche vers en haut à droite) alors il est possible de ne considérer que les points A&rsquo; et B&rsquo; qui se situent au-dessus de A dans le calcul. Cela est possible car les points situés au dessous sont soit inexistant dans l&rsquo;ensemble des points donnés (le point A est le plus en bas à gauche) soit ont déjà été traités par les itérations précédentes et ont donc déjà été ajoutés à la liste des carrés identifiés.
+
+Cela permet d&rsquo;extraire la formule suivante pour calculer les coordonnées de A&rsquo; et B&rsquo; :
 
     A'.x = A.x - (B.y - A.y)
     A'.y = A.y + (B.x - A.x)
