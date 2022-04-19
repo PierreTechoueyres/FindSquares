@@ -58,7 +58,7 @@ x y
   B'.y = B.y + (B.x - a.x)
   #+end_example
 
- 
+
 **  Remarque
    Le fichier contient des doublons :
    #+begin_src sh
@@ -116,16 +116,17 @@ x y
   des points situés plus avant, calculer les points possibles pour
   un carré et vérifier s'ils existent.
 
-  Si oui ajouter le carré trouvé à la liste des carrés en triant les
+  Si oui, ajouter le carré trouvé à la liste des carrés en triant les
   sommets par ordre croissant dans le plan (comme pour les points en
   entrés).
 
   La liste des carrés trouvés est également un =SortedSet= mais un
   =SortedSet<Square>=. Cela permet de ne pas créer de doublons lors de
   du parcours. En effet lors du parcours, B et A' seront présent dans
-  le parcours. Il y a sans doute une amélioration à ajouter pour
-  détecter ce cas pour éviter d'avoir recours à cette structure de
-  donnée.
+  le parcours.
+
+  Il y a sans doute une amélioration à ajouter pour détecter ce cas
+  pour éviter d'avoir recours à cette structure de donnée.
 
 * Validation
   Un ensemble de tests unitaires a été ajouté pour valider les

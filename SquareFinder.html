@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
 <head>
-<!-- 2022-04-19 mar. 15:19 -->
+<!-- 2022-04-19 mar. 17:34 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Recherche de carrés dans un nuage de points</title>
@@ -216,8 +216,16 @@ table tr:nth-child(2n) td{ background-color:#f3f6f6; }
 <div id="text-table-of-contents">
 <ul>
 <li><a href="#demande">1. Demande</a></li>
-<li><a href="#analyse">2. Analyse</a></li>
-<li><a href="#ralisation">3. Réalisation</a></li>
+<li><a href="#analyse">2. Analyse</a>
+<ul>
+<li><a href="#remarque">2.1. Remarque</a></li>
+</ul>
+</li>
+<li><a href="#ralisation">3. Réalisation</a>
+<ul>
+<li><a href="#dtails">3.1. Détails</a></li>
+</ul>
+</li>
 <li><a href="#validation">4. Validation</a></li>
 <li><a href="#amliorations">5. Améliorations</a></li>
 </ul>
@@ -247,7 +255,7 @@ S&rsquo;il n&rsquo;y en a pas comment le démontrer ?
 <p>
 Exemple : les coordonnées ci-dessous forment un carré valide
 </p>
-<pre class="example" id="org1dd7396">
+<pre class="example" id="org397e72a">
 -1 -1
 2 1
 4 -2
@@ -261,7 +269,7 @@ Exemple : les coordonnées ci-dessous forment un carré valide
 <div class="outline-text-2" id="text-2">
 <p>
 Pour chaque coupe de point (A, B) dans le plan il est possible de
-déterminer quatre autres point A&rsquo; (1 et 2) et B&rsquo; (1 et 2) tels qu&rsquo;à eux 8 ils formment deux carrés. 
+déterminer quatre autres point A&rsquo; (1 et 2) et B&rsquo; (1 et 2) tels qu&rsquo;à eux 8 ils forment deux carrés.
 </p>
 
 <p>
@@ -269,7 +277,7 @@ Dans l&rsquo;exemple précédent si A = (-1, -1) et B = (2, 1) alors il est
 possible de calculer des valeurs pour A&rsquo; et B&rsquo; telles qu&rsquo;il soit
 possible de former deux carrés.
 </p>
-<pre class="example" id="orgba83eaa">
+<pre class="example" id="org2fce9a6">
   A'1 = (-3, 2) et A'2 = (1, -4)
   B'1 = (0, 4) et B'2 = (4, -2)
 </pre>
@@ -282,23 +290,27 @@ s&rsquo;il existe des points correspondants à A&rsquo; et B&rsquo;.
 
 <p>
 Si l&rsquo;on décide de trier les points en partant des plus petites
-valeur de x et de y jusqu&rsquo;aux plus grandes valeur de x et de y (d&rsquo;en
+valeurs de x et de y jusqu&rsquo;aux plus grandes valeurs de x et de y (d&rsquo;en
 bas à gauche vers en le haut à droite) alors il est possible de ne
-considérer que les points A&rsquo; et B&rsquo; qui se au dessus de A dans le
-calcul. Ce qui permet d&rsquo;extraire la formule suivante pour calculer
-les coordonnées de A&rsquo;: 
+considérer que les points A&rsquo; et B&rsquo; qui se situent au-dessus de A dans le
+calcul. Cela permet d&rsquo;extraire la formule suivante pour calculer
+les coordonnées de A&rsquo;:
 </p>
 
-<pre class="example" id="org5bdc34e">
+<pre class="example" id="org0e6d073">
   A'.x = A.x - (B.y - A.y)
   A'.y = A.y + (B.x - A.x)
 
   B'.x = B.x - (B.y - A.y)
   B'.y = B.y + (B.x - a.x)
 </pre>
+</div>
 
+
+<div id="outline-container-remarque" class="outline-3">
+<h3 id="remarque"><span class="section-number-3">2.1.</span> Remarque</h3>
+<div class="outline-text-3" id="text-2-1">
 <p>
-Remarque :
 Le fichier contient des doublons :
 </p>
 <div class="org-src-container">
@@ -328,15 +340,17 @@ Le fichier contient des doublons :
 
 <p>
 J&rsquo;ai pris le partis de considérer qu&rsquo;il s&rsquo;agissait d&rsquo;une erreur dans
-le fichier et de ne conserver qu&rsquo;un seule occurence 
+le fichier et de ne conserver qu&rsquo;une seule occurrence.
 </p>
 </div>
 </div>
+</div>
+
 <div id="outline-container-ralisation" class="outline-2">
 <h2 id="ralisation"><span class="section-number-2">3.</span> Réalisation</h2>
 <div class="outline-text-2" id="text-3">
 <p>
-Le language choisi est le C#.
+Le langage choisi est le C#.
 </p>
 
 <p>
@@ -348,12 +362,14 @@ L&rsquo;idée générale est la suivante :
 <li>Pour chaque point, parcourir la suite de la structure et calculer
 les points possibles pour un carré,
 <ol class="org-ol">
-<li>Vérifier si le point exite</li>
+<li>Vérifier si le point existe</li>
 <li>Ajouter le carré à la liste s&rsquo;il n&rsquo;existe pas déjà</li>
 </ol></li>
 </ol>
-
-
+</div>
+<div id="outline-container-dtails" class="outline-3">
+<h3 id="dtails"><span class="section-number-3">3.1.</span> Détails</h3>
+<div class="outline-text-3" id="text-3-1">
 <p>
 Les points seront stockés dans un objet <code>Point</code> définis comme suit:
 </p>
@@ -390,10 +406,29 @@ Les points seront stockés dans un objet <code>Point</code> définis comme suit:
 
 <p>
 L&rsquo;idée générale est de stocker l&rsquo;ensemble des points dans une
-structure de donnée permettant un accès rapipde pour la vérification
+structure de donnée permettant un accès rapide pour la vérification
 de la présence des points. Un <code>SortedSet&lt;Point&gt;</code> est utilisé avec un
 <code>PointComparer</code> pour trier l&rsquo;ensemble.
 </p>
+<div class="org-src-container">
+<pre class="src src-csharp"><span class="org-keyword">namespace</span> <span class="org-variable-name">SquareFinder</span>;
+
+<span class="org-keyword">public</span> <span class="org-keyword">class</span> <span class="org-type">PointComparer</span> : <span class="org-type">IComparer</span>&lt;<span class="org-type">Point</span>&gt;
+{
+    <span class="org-keyword">public</span> <span class="org-type">int</span> <span class="org-function-name">Compare</span>(<span class="org-type">Point</span>? <span class="org-variable-name">a</span>, <span class="org-type">Point</span>? <span class="org-variable-name">b</span>)
+    {
+        <span class="org-keyword">if</span> (a <span class="org-keyword">is</span> <span class="org-constant">null</span> &amp;&amp; b <span class="org-keyword">is</span> <span class="org-constant">null</span>) <span class="org-keyword">return</span> 0;
+        <span class="org-keyword">if</span> (a <span class="org-keyword">is</span> <span class="org-constant">null</span>) <span class="org-keyword">return</span> -1;
+        <span class="org-keyword">if</span> (b <span class="org-keyword">is</span> <span class="org-constant">null</span>) <span class="org-keyword">return</span> 1;
+
+        <span class="org-type">var</span> <span class="org-variable-name">yDelta</span> = b.Y &lt; a.Y ? 1 : b.Y == a.Y ? 0 : -1;
+        <span class="org-type">var</span> <span class="org-variable-name">xDelta</span> = b.X &lt; a.X ? 1 : b.X == a.X ? 0 : -1;
+
+        <span class="org-keyword">return</span> yDelta == 0 ? xDelta : yDelta ;
+    }
+}
+</pre>
+</div>
 
 <p>
 Les accès au point depuis le <code>SortedSet</code> sont garantis en <code>O(log n)</code>
@@ -407,8 +442,8 @@ un carré et vérifier s&rsquo;ils existent.
 </p>
 
 <p>
-Si oui ajouter le carré trouvé à la liste des carés en triant les
-sommets par odre croissant dans le plan (comme pour les points en
+Si oui, ajouter le carré trouvé à la liste des carrés en triant les
+sommets par ordre croissant dans le plan (comme pour les points en
 entrés).
 </p>
 
@@ -416,10 +451,14 @@ entrés).
 La liste des carrés trouvés est également un <code>SortedSet</code> mais un
 <code>SortedSet&lt;Square&gt;</code>. Cela permet de ne pas créer de doublons lors de
 du parcours. En effet lors du parcours, B et A&rsquo; seront présent dans
-le parcours. Il y a sans doute une amélioration à ajouter pour
-détecter ce cas pour éviter d&rsquo;avoir recour à cette structure de
-donnée.
+le parcours.
 </p>
+
+<p>
+Il y a sans doute une amélioration à ajouter pour détecter ce cas
+pour éviter d&rsquo;avoir recours à cette structure de donnée.
+</p>
+</div>
 </div>
 </div>
 
@@ -428,7 +467,7 @@ donnée.
 <div class="outline-text-2" id="text-4">
 <p>
 Un ensemble de tests unitaires a été ajouté pour valider les
-composants séparéments.
+composants séparément.
 </p>
 </div>
 </div>
@@ -436,6 +475,21 @@ composants séparéments.
 <div id="outline-container-amliorations" class="outline-2">
 <h2 id="amliorations"><span class="section-number-2">5.</span> Améliorations</h2>
 <div class="outline-text-2" id="text-5">
+<p>
+J&rsquo;ai l&rsquo;intuition qu&rsquo;il est possible d&rsquo;arrêter les parcours des
+points A et B en utilisant les propriétés du plan (min et max des
+coordonnées) mais je n&rsquo;ai pas réussi à trouver comment.
+</p>
+
+<p>
+J&rsquo;ai exclu les améliorations suivantes :
+</p>
+<ul class="org-ul">
+<li>Détecter que tous les points sont sur la même droite (le cas n&rsquo;est
+pas présent dans le fichier)</li>
+<li>Détecter qu&rsquo;il n&rsquo;y a pas assez de points pour former un carré (le
+parcours étant très rapide dans ce cas-là ce n&rsquo;est sans doute pas utile)</li>
+</ul>
 </div>
 </div>
 </div>
