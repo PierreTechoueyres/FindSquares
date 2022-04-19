@@ -15,7 +15,7 @@ public class SquareFinder
         foreach (var line in lines)
         {
             var elements = line.Split(" ");
-            if (elements.Length == 2
+            if (elements.Length >= 2
                 && int.TryParse(elements[0], out var x)
                 && int.TryParse(elements[1], out var y))
             {
@@ -32,20 +32,20 @@ public class SquareFinder
     }
     public SortedSet<Square> FindSquares()
     {
-        var ind = 0;
+        var aIndex = 0;
         var orderedPoints = Points.ToArray();
 
         var solutions = new SortedSet<Square>(new SquareComparer());
         
         foreach (var cornerA in Points)
         {
-            ++ind;
+            ++aIndex;
             var cornerAPrime = new Point();
             var cornerBPrime = new Point();
 
-            for (int i = ind; i < orderedPoints.Length; i++)
+            for (int bIndex = aIndex; bIndex < orderedPoints.Length; bIndex++)
             {
-                var cornerB = orderedPoints[i];
+                var cornerB = orderedPoints[bIndex];
                 
                 cornerAPrime.X = cornerA.X - (cornerB.Y - cornerA.Y);
                 cornerAPrime.Y = cornerA.Y + (cornerB.X - cornerA.X);

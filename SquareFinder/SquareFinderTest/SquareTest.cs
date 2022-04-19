@@ -17,10 +17,8 @@ public class SquareTest
     [Fact]
     public void CanThrowExceptionWhenBuildingAnInvalidSquare()
     {
-        Action constructor = () =>
-        {
-            var _ = new Square(new Point(-1, -1), new Point(2, 1), new Point(4, 2), new Point(4, 2));
-        };
+        var constructor = () =>
+            new Square(new Point(-1, -1), new Point(2, 1), new Point(4, 2), new Point(4, 2));
         constructor.Should().Throw<Exception>().Which
             .Message.Should().StartWith("This isn't a square !!!");
     }
