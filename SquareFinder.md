@@ -5,6 +5,7 @@
   - [Détails](#dtails)
 - [Validation](#validation)
 - [Améliorations](#amliorations)
+- [Divers](#divers)
 
 
 
@@ -22,10 +23,14 @@ x y
 
 Exemple : les coordonnées ci-dessous forment un carré valide
 
-    -1 -1
-    2 1
-    4 -2
-    1 -4
+| x  | y  | label |
+|--- |--- |----- |
+| -1 | -1 | D     |
+| 2  | 1  | C     |
+| 4  | -2 | B     |
+| 1  | -4 | A     |
+
+![img](Img/example.png)
 
 
 <a id="analyse"></a>
@@ -34,14 +39,24 @@ Exemple : les coordonnées ci-dessous forment un carré valide
 
 Pour chaque coupe de point (A, B) dans le plan il est possible de déterminer quatre autres point A&rsquo; (1 et 2) et B&rsquo; (1 et 2) tels qu&rsquo;à eux 8 ils forment deux carrés.
 
-Dans l&rsquo;exemple précédent si A = (-1, -1) et B = (2, 1) alors il est possible de calculer des valeurs pour A&rsquo; et B&rsquo; telles qu&rsquo;il soit possible de former deux carrés.
+Dans l&rsquo;exemple précédent si A = (1, -4) et B = (4, -2) alors il est possible de calculer des valeurs pour A&rsquo; et B&rsquo; telles qu&rsquo;il soit possible de former deux carrés.
 
-    A'1 = (-3, 2) et A'2 = (1, -4)
-    B'1 = (0, 4) et B'2 = (4, -2)
+    A' = (-1, -1) et A" = (3, -7)
+    B' = (2, 1) et B" = (6, -5)
 
-À partir cela il est possible de rechercher dans la liste des points s&rsquo;il existe des points correspondants à A&rsquo; et B&rsquo;.
+| x  | y  | label           |
+| 1  | -4 | A               |
+| 4  | -2 | B               |
+| -1 | -1 | A&rsquo;        |
+| 2  | 1  | B&rsquo;        |
+| 3  | -7 | A&rsquo;&rsquo; |
+| 6  | -5 | B&rsquo;&rsquo; |
 
-Si l&rsquo;on décide de trier les points en partant des plus petites valeurs de x et de y jusqu&rsquo;aux plus grandes valeurs de x et de y (d&rsquo;en bas à gauche vers en le haut à droite) alors il est possible de ne considérer que les points A&rsquo; et B&rsquo; qui se situent au-dessus de A dans le calcul. Cela permet d&rsquo;extraire la formule suivante pour calculer les coordonnées de A&rsquo;:
+![img](Img/deuxCarrés.png)
+
+À partir de cela il est possible de rechercher dans la liste des points s&rsquo;il existe des points correspondants à A&rsquo; et B&rsquo;.
+
+Si l&rsquo;on décide de trier les points en partant des plus petites valeurs de x et de y jusqu&rsquo;aux plus grandes valeurs de x et de y (d&rsquo;en bas à gauche vers en haut à droite) alors il est possible de ne considérer que les points A&rsquo; et B&rsquo; qui se situent au-dessus de A dans le calcul. Cela permet d&rsquo;extraire la formule suivante pour calculer les coordonnées de A&rsquo;:
 
     A'.x = A.x - (B.y - A.y)
     A'.y = A.y + (B.x - A.x)
@@ -80,7 +95,7 @@ Le fichier contient des doublons :
       2 786 660
 ```
 
-J&rsquo;ai pris le partis de considérer qu&rsquo;il s&rsquo;agissait d&rsquo;une erreur dans le fichier et de ne conserver qu&rsquo;une seule occurrence.
+J&rsquo;ai pris le partis de considérer qu&rsquo;il s&rsquo;agissait d&rsquo;une erreur dans le fichier et de ne conserver qu&rsquo;une seule occurrence (Cela est fait en utilisant un `SortedSet` qui exclut les doublons lors de l&rsquo;ajout).
 
 
 <a id="ralisation"></a>
@@ -126,7 +141,7 @@ public class Point
 
     public override string ToString()
     {
-        return $"({X} ; {Y})";
+        return $"({X}, {Y})";
     }
 
     public int X { get; set; }
@@ -134,7 +149,7 @@ public class Point
 }
 ```
 
-L&rsquo;idée générale est de stocker l&rsquo;ensemble des points dans une structure de donnée permettant un accès rapide pour la vérification de la présence des points. Un `SortedSet<Point>` est utilisé avec un `PointComparer` pour trier l&rsquo;ensemble.
+L&rsquo;idée générale est de stocker l&rsquo;ensemble des points dans une structure de données permettant un accès rapide pour la vérification de la présence des points. Un `SortedSet<Point>` est utilisé avec un `PointComparer` pour trier l&rsquo;ensemble.
 
 ```csharp
 namespace SquareFinder;
@@ -172,14 +187,25 @@ Il y a sans doute une amélioration à ajouter pour détecter ce cas pour évite
 
 Un ensemble de tests unitaires a été ajouté pour valider les composants séparément.
 
+![img](./Img/20220419_200712.png)
+
 
 <a id="amliorations"></a>
 
 # Améliorations
 
-J&rsquo;ai l&rsquo;intuition qu&rsquo;il est possible d&rsquo;arrêter les parcours des points A et B en utilisant les propriétés du plan (min et max des coordonnées) mais je n&rsquo;ai pas réussi à trouver comment.
+Pour optimiser le temps d&rsquo;exécution, j&rsquo;ai l&rsquo;intuition qu&rsquo;il est possible d&rsquo;arrêter les parcours des points A et B, en utilisant les propriétés du plan (min et max des coordonnées) mais je n&rsquo;ai pas réussi à trouver comment.
 
 J&rsquo;ai exclu les améliorations suivantes :
 
--   Détecter que tous les points sont sur la même droite (le cas n&rsquo;est pas présent dans le fichier)
--   Détecter qu&rsquo;il n&rsquo;y a pas assez de points pour former un carré (le parcours étant très rapide dans ce cas-là ce n&rsquo;est sans doute pas utile)
+-   Détecter que tous les points sont sur la même droite (le cas n&rsquo;est pas présent dans le fichier),
+-   Détecter qu&rsquo;il n&rsquo;y a pas assez de points pour former un carré (le parcours étant très rapide dans ce cas-là ce n&rsquo;est sans doute pas utile).
+
+
+<a id="divers"></a>
+
+# Divers
+
+Visualisation des données founies dans le fichier `exercice.txt`:
+
+![img](Img/exercice.png)

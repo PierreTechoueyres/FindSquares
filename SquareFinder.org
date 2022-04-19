@@ -20,32 +20,76 @@ x y
   S'il n'y en a pas comment le démontrer ?
 
   Exemple : les coordonnées ci-dessous forment un carré valide
-  #+begin_example
--1 -1
-2 1
-4 -2
-1 -4
-  #+end_example
+  #+tblname: example-data
+  |  x |  y | label |
+  |----+----+-------|
+  | -1 | -1 | D     |
+  |  2 |  1 | C     |
+  |  4 | -2 | B     |
+  |  1 | -4 | A     |
+
+  #+begin_src gnuplot :var data=example-data :file Img/example.png
+reset
+
+set xrange [-2:5]
+set yrange [-5:2]
+set size square
+plot data using 1:2 with points notitle , '' using 1:($2+0.25):3 with labels notitle
+#+end_src
+
+  #+RESULTS:
+  [[file:Img/example.png]]
 
 * Analyse
   Pour chaque coupe de point (A, B) dans le plan il est possible de
   déterminer quatre autres point A' (1 et 2) et B' (1 et 2) tels qu'à eux 8 ils forment deux carrés.
 
-  Dans l'exemple précédent si A = (-1, -1) et B = (2, 1) alors il est
+  Dans l'exemple précédent si A = (1, -4) et B = (4, -2) alors il est
   possible de calculer des valeurs pour A' et B' telles qu'il soit
   possible de former deux carrés.
   #+begin_example
-  A'1 = (-3, 2) et A'2 = (1, -4)
-  B'1 = (0, 4) et B'2 = (4, -2)
+  A' = (-1, -1) et A" = (3, -7)
+  B' = (2, 1) et B" = (6, -5)
   #+end_example
 
-  À partir cela il est possible de rechercher dans la liste des points
-  s'il existe des points correspondants à A' et B'.
+  #+tblname: deux-carrés
+  |----+----+-------|
+  |  x |  y | label |
+  |----+----+-------|
+  |  1 | -4 | A     |
+  |  4 | -2 | B     |
+  |----+----+-------|
+  | -1 | -1 | A'    |
+  |  2 |  1 | B'    |
+  |----+----+-------|
+  |  3 | -7 | A''   |
+  |  6 | -5 | B''   |
+  |----+----+-------|
+  
+  #+begin_src gnuplot :var data=deux-carrés :file Img/deuxCarrés.png
+reset
+set xrange [-3:8]
+set yrange [-9:4]
+set size square
 
+set xtics -8, 1
+set ytics -8, 1
+set xzeroaxis
+set yzeroaxis
+
+set title "Deux carrés"
+plot data using 1:2 with points notitle , '' using 1:($2+0.25):3 with labels notitle
+  #+end_src
+
+  #+RESULTS:
+  [[file:Img/deuxCarrés.png]]
+
+  À partir de cela il est possible de rechercher dans la liste des points
+  s'il existe des points correspondants à A' et B'.
 
   Si l'on décide de trier les points en partant des plus petites
   valeurs de x et de y jusqu'aux plus grandes valeurs de x et de y (d'en
-  bas à gauche vers en le haut à droite) alors il est possible de ne
+  bas à gauche vers en haut à droite) alors il est possible de ne
   considérer que les points A' et B' qui se situent au-dessus de A dans le
   calcul. Cela permet d'extraire la formule suivante pour calculer
   les coordonnées de A':
@@ -57,7 +101,6 @@ x y
   B'.x = B.x - (B.y - A.y)
   B'.y = B.y + (B.x - a.x)
   #+end_example
-
 
 **  Remarque
    Le fichier contient des doublons :
@@ -86,7 +129,8 @@ x y
    #+end_src
 
    J'ai pris le partis de considérer qu'il s'agissait d'une erreur dans
-   le fichier et de ne conserver qu'une seule occurrence.
+   le fichier et de ne conserver qu'une seule occurrence (Cela est
+   fait en utilisant un =SortedSet= qui exclut les doublons lors de l'ajout).
 
 * Réalisation
 
@@ -99,12 +143,13 @@ x y
      les points possibles pour un carré,
      1) Vérifier si le point existe
      2) Ajouter le carré à la liste s'il n'existe pas déjà
+
 ** Détails
   Les points seront stockés dans un objet =Point= définis comme suit:
   #+include: SquareFinder/SquareFinder/Point.cs src csharp
 
   L'idée générale est de stocker l'ensemble des points dans une
-  structure de donnée permettant un accès rapide pour la vérification
+  structure de données permettant un accès rapide pour la vérification
   de la présence des points. Un =SortedSet<Point>= est utilisé avec un
   =PointComparer= pour trier l'ensemble.
   #+include: SquareFinder/SquareFinder/PointComparer.cs src csharp
@@ -132,15 +177,29 @@ x y
   Un ensemble de tests unitaires a été ajouté pour valider les
   composants séparément.
 
+  [[./Img/20220419_200712.png]]
+
 * Améliorations
-  J'ai l'intuition qu'il est possible d'arrêter les parcours des
-  points A et B en utilisant les propriétés du plan (min et max des
-  coordonnées) mais je n'ai pas réussi à trouver comment.
+  Pour optimiser le temps d'exécution, j'ai l'intuition qu'il est
+  possible d'arrêter les parcours des points A et B, en utilisant les
+  propriétés du plan (min et max des coordonnées) mais je n'ai pas
+  réussi à trouver comment.
 
   J'ai exclu les améliorations suivantes :
   - Détecter que tous les points sont sur la même droite (le cas n'est
-    pas présent dans le fichier)
+    pas présent dans le fichier),
   - Détecter qu'il n'y a pas assez de points pour former un carré (le
-    parcours étant très rapide dans ce cas-là ce n'est sans doute pas utile)
+    parcours étant très rapide dans ce cas-là ce n'est sans doute pas utile).
+
+* Divers
+  Visualisation des données founies dans le fichier =exercice.txt=:
+  #+begin_src gnuplot :file Img/exercice.png
+reset
+set size square
+plot "exercice.txt" with dots notitle
+  #+end_src
+
+  #+RESULTS:
+  [[file:Img/exercice.png]]
 
 # Fin du fichier SquareFinder

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
 <head>
-<!-- 2022-04-19 mar. 17:34 -->
+<!-- 2022-04-19 mar. 21:11 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Recherche de carrés dans un nuage de points</title>
@@ -228,6 +228,7 @@ table tr:nth-child(2n) td{ background-color:#f3f6f6; }
 </li>
 <li><a href="#validation">4. Validation</a></li>
 <li><a href="#amliorations">5. Améliorations</a></li>
+<li><a href="#divers">6. Divers</a></li>
 </ul>
 </div>
 </div>
@@ -255,12 +256,55 @@ S&rsquo;il n&rsquo;y en a pas comment le démontrer ?
 <p>
 Exemple : les coordonnées ci-dessous forment un carré valide
 </p>
-<pre class="example" id="org397e72a">
--1 -1
-2 1
-4 -2
-1 -4
-</pre>
+<table id="example-data" border="1" cellspacing="0" cellpadding="6" rules="all" frame="border" width="100%">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right">x</th>
+<th scope="col" class="org-right">y</th>
+<th scope="col" class="org-left">label</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-right">-1</td>
+<td class="org-right">-1</td>
+<td class="org-left">D</td>
+</tr>
+
+<tr>
+<td class="org-right">2</td>
+<td class="org-right">1</td>
+<td class="org-left">C</td>
+</tr>
+
+<tr>
+<td class="org-right">4</td>
+<td class="org-right">-2</td>
+<td class="org-left">B</td>
+</tr>
+
+<tr>
+<td class="org-right">1</td>
+<td class="org-right">-4</td>
+<td class="org-left">A</td>
+</tr>
+</tbody>
+</table>
+
+
+<div id="orgd2a531a" class="figure">
+<p><img src="Img/example.png" alt="example.png" />
+</p>
+</div>
 </div>
 </div>
 
@@ -273,31 +317,94 @@ déterminer quatre autres point A&rsquo; (1 et 2) et B&rsquo; (1 et 2) tels qu&r
 </p>
 
 <p>
-Dans l&rsquo;exemple précédent si A = (-1, -1) et B = (2, 1) alors il est
+Dans l&rsquo;exemple précédent si A = (1, -4) et B = (4, -2) alors il est
 possible de calculer des valeurs pour A&rsquo; et B&rsquo; telles qu&rsquo;il soit
 possible de former deux carrés.
 </p>
-<pre class="example" id="org2fce9a6">
-  A'1 = (-3, 2) et A'2 = (1, -4)
-  B'1 = (0, 4) et B'2 = (4, -2)
+<pre class="example" id="org88ea865">
+  A' = (-1, -1) et A" = (3, -7)
+  B' = (2, 1) et B" = (6, -5)
 </pre>
 
+<table id="deux-carrs" border="1" cellspacing="0" cellpadding="6" rules="all" frame="border" width="100%">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right">x</th>
+<th scope="col" class="org-right">y</th>
+<th scope="col" class="org-left">label</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-right">1</td>
+<td class="org-right">-4</td>
+<td class="org-left">A</td>
+</tr>
+
+<tr>
+<td class="org-right">4</td>
+<td class="org-right">-2</td>
+<td class="org-left">B</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-right">-1</td>
+<td class="org-right">-1</td>
+<td class="org-left">A&rsquo;</td>
+</tr>
+
+<tr>
+<td class="org-right">2</td>
+<td class="org-right">1</td>
+<td class="org-left">B&rsquo;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-right">3</td>
+<td class="org-right">-7</td>
+<td class="org-left">A&rsquo;&rsquo;</td>
+</tr>
+
+<tr>
+<td class="org-right">6</td>
+<td class="org-right">-5</td>
+<td class="org-left">B&rsquo;&rsquo;</td>
+</tr>
+</tbody>
+</table>
+
+
+<div id="orgcd094ce" class="figure">
+<p><img src="Img/deuxCarrés.png" alt="deuxCarrés.png" />
+</p>
+</div>
+
 <p>
-À partir cela il est possible de rechercher dans la liste des points
+À partir de cela il est possible de rechercher dans la liste des points
 s&rsquo;il existe des points correspondants à A&rsquo; et B&rsquo;.
 </p>
-
 
 <p>
 Si l&rsquo;on décide de trier les points en partant des plus petites
 valeurs de x et de y jusqu&rsquo;aux plus grandes valeurs de x et de y (d&rsquo;en
-bas à gauche vers en le haut à droite) alors il est possible de ne
+bas à gauche vers en haut à droite) alors il est possible de ne
 considérer que les points A&rsquo; et B&rsquo; qui se situent au-dessus de A dans le
 calcul. Cela permet d&rsquo;extraire la formule suivante pour calculer
 les coordonnées de A&rsquo;:
 </p>
 
-<pre class="example" id="org0e6d073">
+<pre class="example" id="orgd35d60f">
   A'.x = A.x - (B.y - A.y)
   A'.y = A.y + (B.x - A.x)
 
@@ -305,7 +412,6 @@ les coordonnées de A&rsquo;:
   B'.y = B.y + (B.x - a.x)
 </pre>
 </div>
-
 
 <div id="outline-container-remarque" class="outline-3">
 <h3 id="remarque"><span class="section-number-3">2.1.</span> Remarque</h3>
@@ -340,7 +446,8 @@ Le fichier contient des doublons :
 
 <p>
 J&rsquo;ai pris le partis de considérer qu&rsquo;il s&rsquo;agissait d&rsquo;une erreur dans
-le fichier et de ne conserver qu&rsquo;une seule occurrence.
+le fichier et de ne conserver qu&rsquo;une seule occurrence (Cela est
+fait en utilisant un <code>SortedSet</code> qui exclut les doublons lors de l&rsquo;ajout).
 </p>
 </div>
 </div>
@@ -367,6 +474,7 @@ les points possibles pour un carré,
 </ol></li>
 </ol>
 </div>
+
 <div id="outline-container-dtails" class="outline-3">
 <h3 id="dtails"><span class="section-number-3">3.1.</span> Détails</h3>
 <div class="outline-text-3" id="text-3-1">
@@ -395,7 +503,7 @@ Les points seront stockés dans un objet <code>Point</code> définis comme suit:
 
     <span class="org-keyword">public</span> <span class="org-keyword">override</span> <span class="org-type">string</span> <span class="org-function-name">ToString</span>()
     {
-        <span class="org-keyword">return</span> $<span class="org-string">"({X} ; {Y})"</span>;
+        <span class="org-keyword">return</span> $<span class="org-string">"({X}, {Y})"</span>;
     }
 
     <span class="org-keyword">public</span> <span class="org-type">int</span> <span class="org-variable-name">X</span> { <span class="org-keyword">get</span>; <span class="org-keyword">set</span>; }
@@ -406,7 +514,7 @@ Les points seront stockés dans un objet <code>Point</code> définis comme suit:
 
 <p>
 L&rsquo;idée générale est de stocker l&rsquo;ensemble des points dans une
-structure de donnée permettant un accès rapide pour la vérification
+structure de données permettant un accès rapide pour la vérification
 de la présence des points. Un <code>SortedSet&lt;Point&gt;</code> est utilisé avec un
 <code>PointComparer</code> pour trier l&rsquo;ensemble.
 </p>
@@ -469,6 +577,12 @@ pour éviter d&rsquo;avoir recours à cette structure de donnée.
 Un ensemble de tests unitaires a été ajouté pour valider les
 composants séparément.
 </p>
+
+
+<div id="org8291ccd" class="figure">
+<p><img src="./Img/20220419_200712.png" alt="20220419_200712.png" />
+</p>
+</div>
 </div>
 </div>
 
@@ -476,9 +590,10 @@ composants séparément.
 <h2 id="amliorations"><span class="section-number-2">5.</span> Améliorations</h2>
 <div class="outline-text-2" id="text-5">
 <p>
-J&rsquo;ai l&rsquo;intuition qu&rsquo;il est possible d&rsquo;arrêter les parcours des
-points A et B en utilisant les propriétés du plan (min et max des
-coordonnées) mais je n&rsquo;ai pas réussi à trouver comment.
+Pour optimiser le temps d&rsquo;exécution, j&rsquo;ai l&rsquo;intuition qu&rsquo;il est
+possible d&rsquo;arrêter les parcours des points A et B, en utilisant les
+propriétés du plan (min et max des coordonnées) mais je n&rsquo;ai pas
+réussi à trouver comment.
 </p>
 
 <p>
@@ -486,10 +601,24 @@ J&rsquo;ai exclu les améliorations suivantes :
 </p>
 <ul class="org-ul">
 <li>Détecter que tous les points sont sur la même droite (le cas n&rsquo;est
-pas présent dans le fichier)</li>
+pas présent dans le fichier),</li>
 <li>Détecter qu&rsquo;il n&rsquo;y a pas assez de points pour former un carré (le
-parcours étant très rapide dans ce cas-là ce n&rsquo;est sans doute pas utile)</li>
+parcours étant très rapide dans ce cas-là ce n&rsquo;est sans doute pas utile).</li>
 </ul>
+</div>
+</div>
+
+<div id="outline-container-divers" class="outline-2">
+<h2 id="divers"><span class="section-number-2">6.</span> Divers</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+Visualisation des données founies dans le fichier <code>exercice.txt</code>:
+</p>
+
+<div id="org81142c7" class="figure">
+<p><img src="Img/exercice.png" alt="exercice.png" />
+</p>
+</div>
 </div>
 </div>
 </div>
