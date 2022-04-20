@@ -53,13 +53,13 @@ public class SquareFinderTest
     }
 
     [Fact]
-    public void CouldFindSquare2()
+    public void CouldFindMoreSquare()
     {
         var inputString = new List<string> {
-            "1 0", "2 0",
-            "0 1", "1 1", "2 1", "3 1",
+                   "1 3", "2 3",
             "0 2", "1 2", "2 2", "3 2",
-            "1 3", "2 3"
+            "0 1", "1 1", "2 1", "3 1",
+                   "1 0", "2 0"
         };
         var squareFinder = new SquareFinder.SquareFinder();
         squareFinder.LoadPoints(inputString);
