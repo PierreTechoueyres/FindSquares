@@ -19,7 +19,7 @@ public class PointComparerTest
         comparer.Compare(point1, null).Should().Be(1);
         comparer.Compare(point1, point1).Should().Be(0);
 
-        comparer.Compare(point1, point2).Should().Be(-1);
+        comparer.Compare(point1, point2).Should().BeLessOrEqualTo(-1);
     }
   
 }

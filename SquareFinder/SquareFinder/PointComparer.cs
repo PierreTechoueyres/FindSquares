@@ -8,8 +8,8 @@ public class PointComparer : IComparer<Point>
         if (a is null) return -1;
         if (b is null) return 1;
 
-        var yDelta = b.Y < a.Y ? 1 : b.Y == a.Y ? 0 : -1;
-        var xDelta = b.X < a.X ? 1 : b.X == a.X ? 0 : -1;
+        var yDelta = a.Y - b.Y;
+        var xDelta = a.X - b.X;
 
         return yDelta == 0 ? xDelta : yDelta ;
     }

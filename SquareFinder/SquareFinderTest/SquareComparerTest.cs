@@ -18,7 +18,7 @@ public class SquareComparerTest
         comparer.Compare(square1, null).Should().Be(1); // null is lesser than an square whatever it is.
         comparer.Compare(square1, square1).Should().Be(0); // equality.
 
-        comparer.Compare(square1, square2).Should().Be(-1); // square2 < square 1.
+        comparer.Compare(square1, square2).Should().BeLessOrEqualTo(-1); // square2 < square 1.
     }
     
 }
