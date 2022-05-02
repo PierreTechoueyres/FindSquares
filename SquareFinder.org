@@ -209,7 +209,7 @@ First / last  x -1000 / 999.
 First / last  y -743 / 269.
 Found 56 !
 dotnet run ../../exercice.txt  27,31s user 0,29s system 99% cpu 27,620 total
-╭─    ~/Travail/VCS/BeTomorrow/SquareFinder/SquareFinder    master !3 ?2             ✔  28s  
+╭─    ~/Travail/VCS/SquareFinder/SquareFinder    master !3 ?2             ✔  28s  
 ╰ 
   #+end_src
 
