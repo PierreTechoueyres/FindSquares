@@ -84,10 +84,10 @@ set style line 2 \
     pointtype 5 pointsize 1.5
 
 plot "data/deuxCarrés.txt" \
-     index 0 using 1:2 with linespoints linestyle 1 notitle, \
+     index 1 using 1:2 with linespoints linestyle 2 notitle, \
+     '' index 1 using 1:($2+0.25):3 with labels notitle, \
+     '' index 0 using 1:2 with linespoints linestyle 1 notitle, \
      '' index 0 using 1:($2+0.25):3 with labels notitle, \
-     '' index 1 using 1:2 with linespoints linestyle 2 notitle, \
-     '' index 1 using 1:($2+0.25):3 with labels notitle
 
   #+end_src
 
@@ -194,6 +194,70 @@ plot "data/deuxCarrés.txt" \
 
   [[./Img/20220419_200712.png]]
 
+* Tests
+  Soit l'ensemble de points suivants :
+  
+  #+begin_src gnuplot :var data=example-data :file Img/onzeCarrésPoints.png
+reset
+
+set xrange [-1:4]
+set yrange [-1:4]
+set size square
+
+set xzeroaxis
+set yzeroaxis
+set grid
+
+plot "data/onzeCarrés.txt" using 1:2 with points notitle , '' using 1:($2+0.25):3 with labels notitle
+#+end_src
+
+#+RESULTS:
+[[file:Img/onzeCarrésPoints.png]]
+
+Le résultat est celui-là :
+  #+begin_src gnuplot :file Img/onzeCarrés.png
+reset
+set xrange [-1:4]
+set yrange [-1:4]
+set size square
+
+set xtics -8, 1
+set ytics -8, 1
+set xzeroaxis
+set yzeroaxis
+set grid
+
+set title "Onze carrés"
+
+set style line 1 \
+    linecolor rgb '#0060ad' \
+    linetype 1 linewidth 2 \
+    pointtype 7 pointsize 1.5
+
+set style line 2 \
+    linecolor rgb '#dd181f' \
+    linetype 1 linewidth 2 \
+    pointtype 5 pointsize 1.5
+
+plot "data/onzeCarrés.txt" \
+     index 0 using 1:2 with points pointtype 7 notitle, \
+     '' index 0  using 1:($2+0.25):3 with labels notitle, \
+     '' index 1  using 1:2 with linespoints linestyle 1 notitle, \
+     '' index 2  using 1:2 with linespoints linestyle 2 notitle, \
+     '' index 3  using 1:2 with linespoints linestyle 1 notitle, \
+     '' index 4  using 1:2 with linespoints linestyle 1 notitle, \
+     '' index 5  using 1:2 with linespoints linestyle 2 notitle, \
+     '' index 6  using 1:2 with linespoints linestyle 1 notitle, \
+     '' index 7  using 1:2 with linespoints linestyle 1 notitle, \
+     '' index 8  using 1:2 with linespoints linestyle 2 notitle, \
+     '' index 9  using 1:2 with linespoints linestyle 1 notitle, \
+     '' index 10 using 1:2 with linespoints linestyle 2 notitle, \
+     '' index 11 using 1:2 with linespoints linestyle 1 notitle
+  #+end_src
+
+  #+RESULTS:
+  [[file:Img/onzeCarrés.png]]
+ 
 * Exécution
   Lancement depuis la ligne de commande
   #+begin_src shell
