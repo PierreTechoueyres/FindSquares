@@ -22,7 +22,7 @@ public class Square
 
     public SortedSet<Point> Corners { get; } = new(new PointComparer());
 
-    public IEnumerable<Point> getPoints()
+    public IEnumerable<Point> GetPoints()
     {
         var corners = Corners.ToArray();
         yield return corners[0];
@@ -33,6 +33,6 @@ public class Square
 
     public override string ToString()
     {
-        return string.Join(" ", getPoints());
+        return string.Join(" ", GetPoints());
     }
 }

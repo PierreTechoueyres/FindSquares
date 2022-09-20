@@ -42,8 +42,10 @@ Pour chaque coupe de points (A, B) dans le plan il est possible de déterminer q
 
 Dans l&rsquo;exemple précédent si A = (1, -4) et B = (4, -2) alors il est possible de calculer des valeurs pour A&rsquo;, A&rsquo;&rsquo; et B&rsquo;, B&rsquo;&rsquo; telles qu&rsquo;il soit possible de former deux carrés.
 
-    A' = (-1, -1) et A" = (3, -7)
-    B' = (2, 1) et B" = (6, -5)
+```
+  A' = (-1, -1) et A" = (3, -7)
+  B' = (2, 1) et B" = (6, -5)
+```
 
 ![img](Img/deuxCarrés.png)
 
@@ -53,11 +55,15 @@ Si l&rsquo;on décide de trier les points en partant des plus petites valeurs de
 
 Cela permet d&rsquo;extraire la formule suivante pour calculer les coordonnées de A&rsquo; et B&rsquo; :
 
-    A'.x = A.x - (B.y - A.y)
-    A'.y = A.y + (B.x - A.x)
-    
-    B'.x = B.x - (B.y - A.y)
-    B'.y = B.y + (B.x - a.x)
+```
+  A'.x = A.x - (B.y - A.y)
+  A'.y = A.y + (B.x - A.x)
+
+  B'.x = B.x - (B.y - A.y)
+  B'.y = B.y + (B.x - a.x)
+```
+
+Il est également possible d&rsquo;améliorer le parcours en ignorant les points situés à gauche ou verticalement du point d&rsquo;origine. En effet, soit ceux-ci font partie d&rsquo;un carré dont l&rsquo;autre côté est situé à droite du point d&rsquo;origine (qui a déjà été détecté si son angle fait plus de 45° ou qui sera détecté plus tard si l&rsquo;angle fait moins de 45°).
 
 
 <a id="remarque"></a>
@@ -122,25 +128,26 @@ public class Point
     public Point()
     {
     }
-   
+
     public Point(int x, int y)
     {
         X = x;
         Y = y;
     }
+
     public Point(Point a)
     {
         X = a.X;
         Y = a.Y;
     }
 
+    public int X { get; set; }
+    public int Y { get; set; }
+
     public override string ToString()
     {
         return $"({X}, {Y})";
     }
-
-    public int X { get; set; }
-    public int Y { get; set; }
 }
 ```
 
@@ -160,7 +167,7 @@ public class PointComparer : IComparer<Point>
         var yDelta = a.Y - b.Y;
         var xDelta = a.X - b.X;
 
-        return yDelta == 0 ? xDelta : yDelta ;
+        return yDelta == 0 ? xDelta : yDelta;
     }
 }
 ```
@@ -205,7 +212,7 @@ Le résultat est celui-là :
 Lancement depuis la ligne de commande
 
 ```shell
-time dotnet run ../../exercice.txt
+time dotnet run --project SquareFinder/SquareFinder/SquareFinder.csproj exercice.txt
 ```
 
 ```sh
@@ -215,9 +222,9 @@ First / last  point (-737, -1000) / (394, 999).
 First / last  x -1000 / 999.
 First / last  y -743 / 269.
 Found 56 !
-dotnet run ../../exercice.txt  27,31s user 0,29s system 99% cpu 27,620 total
-╭─    ~/Travail/VCS/BeTomorrow/SquareFinder/SquareFinder    master !3 ?2             ✔  28s  
-╰ 
+dotnet run ../../exercice.txt  11,01s user 0,20s system 102% cpu 10,899 total
+╭─    ~/Travail/VCS/SquareFinder/SquareFinder    master        ✔  13s 
+╰
 ```
 
 Ce qui donne 56 carrés trouvés en 28 secondes.

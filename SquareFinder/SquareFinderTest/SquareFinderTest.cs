@@ -66,6 +66,5 @@ public class SquareFinderTest
 
         var solutions = squareFinder.FindSquares();
         solutions.Should().HaveCount(11);
-        var s = string.Join("\n", solutions);
     }
 }

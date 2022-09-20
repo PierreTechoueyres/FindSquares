@@ -31,12 +31,13 @@ public class SquareFinder
         }
     }
 
-    public SortedSet<Square> FindSquares()
+    public HashSet<Square> FindSquares()
     {
         var aIndex = 0;
         var orderedPoints = Points.ToArray();
 
-        var solutions = new SortedSet<Square>(new SquareComparer());
+        // var solutions = new SortedSet<Square>(new SquareComparer());
+        var solutions = new HashSet<Square>();
 
         foreach (var cornerA in Points)
         {
@@ -47,6 +48,8 @@ public class SquareFinder
             for (var bIndex = aIndex; bIndex < orderedPoints.Length; bIndex++)
             {
                 var cornerB = orderedPoints[bIndex];
+
+                if (cornerA.X >= cornerB.X) continue;
 
                 cornerAPrime.X = cornerA.X - (cornerB.Y - cornerA.Y);
                 cornerAPrime.Y = cornerA.Y + (cornerB.X - cornerA.X);

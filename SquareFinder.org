@@ -58,7 +58,7 @@ plot data using 1:2 with points notitle , '' using 1:($2+0.25):3 with labels not
   A' = (-1, -1) et A" = (3, -7)
   B' = (2, 1) et B" = (6, -5)
   #+end_example
-  
+
   #+begin_src gnuplot :file Img/deuxCarrés.png
 reset
 set xrange [-3:10]
@@ -104,7 +104,7 @@ plot "data/deuxCarrés.txt" \
   est possible, car les points situés au-dessous sont soit inexistant
   dans l'ensemble des points donnés (le point A est le plus en bas à
   gauche) soit ont déjà été traités par les itérations précédentes et
-  ont donc déjà été ajoutés à la liste des carrés identifiés. 
+  ont donc déjà été ajoutés à la liste des carrés identifiés.
 
   Cela permet d'extraire la formule suivante pour calculer
   les coordonnées de A' et B' :
@@ -116,6 +116,14 @@ plot "data/deuxCarrés.txt" \
   B'.x = B.x - (B.y - A.y)
   B'.y = B.y + (B.x - a.x)
   #+end_example
+
+  Il est également possible d'améliorer le parcours en ignorant les
+  points situés à gauche ou verticalement du point d'origine. En
+  effet, soit ceux-ci font partie d'un carré dont l'autre côté est
+  situé à droite du point d'origine (qui a déjà été détecté si son
+  angle fait plus de 45° ou qui sera détecté plus tard si l'angle fait
+  moins de 45°).
+
 
 **  Remarque
    Le fichier contient des doublons :
@@ -196,7 +204,7 @@ plot "data/deuxCarrés.txt" \
 
 * Tests
   Soit l'ensemble de points suivants :
-  
+
   #+begin_src gnuplot :var data=example-data :file Img/onzeCarrésPoints.png
 reset
 
@@ -257,14 +265,14 @@ plot "data/onzeCarrés.txt" \
 
   #+RESULTS:
   [[file:Img/onzeCarrés.png]]
- 
+
 * Exécution
   Lancement depuis la ligne de commande
   #+begin_src shell
-time dotnet run ../../exercice.txt
+time dotnet run --project SquareFinder/SquareFinder/SquareFinder.csproj exercice.txt
   #+end_src
 
-  #+RESULT: 
+  #+RESULT:
   #+begin_src sh
 ❯ time dotnet run ../../exercice.txt
 List of points contains 9982 elements.
@@ -272,9 +280,9 @@ First / last  point (-737, -1000) / (394, 999).
 First / last  x -1000 / 999.
 First / last  y -743 / 269.
 Found 56 !
-dotnet run ../../exercice.txt  27,31s user 0,29s system 99% cpu 27,620 total
-╭─    ~/Travail/VCS/SquareFinder/SquareFinder    master !3 ?2             ✔  28s  
-╰ 
+dotnet run ../../exercice.txt  11,01s user 0,20s system 102% cpu 10,899 total
+╭─    ~/Travail/VCS/SquareFinder/SquareFinder    master        ✔  13s 
+╰
   #+end_src
 
   Ce qui donne 56 carrés trouvés en 28 secondes.
