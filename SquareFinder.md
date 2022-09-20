@@ -189,7 +189,7 @@ Il y a sans doute une amélioration à ajouter pour détecter ce cas pour évite
 
 Un ensemble de tests unitaires a été ajouté pour valider les composants séparément.
 
-![img](./Img/20220419_200712.png)
+![img](./Img/20220920_230222.png)
 
 
 <a id="tests"></a>
@@ -223,11 +223,11 @@ First / last  x -1000 / 999.
 First / last  y -743 / 269.
 Found 56 !
 dotnet run ../../exercice.txt  11,01s user 0,20s system 102% cpu 10,899 total
-╭─    ~/Travail/VCS/SquareFinder/SquareFinder    master        ✔  13s 
+╭─    ~/Travail/VCS/SquareFinder/SquareFinder    master                                           ✔  13s 
 ╰
 ```
 
-Ce qui donne 56 carrés trouvés en 28 secondes.
+Ce qui donne 56 carrés trouvés en 11 secondes.
 
 
 <a id="amliorations"></a>

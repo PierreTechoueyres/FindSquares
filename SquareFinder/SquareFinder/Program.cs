@@ -4,12 +4,12 @@ namespace SquareFinder;
 
 public static class Program
 {
-    public static IFileSystem? _fileSystem { get; set; }
+    public static IFileSystem? FileSystem { get; set; }
 
     private static IFileSystem GetFileSystem()
     {
-        _fileSystem ??= new FileSystem();
-        return _fileSystem;
+        FileSystem ??= new FileSystem();
+        return FileSystem;
     }
 
     public static int Main(string[] args)

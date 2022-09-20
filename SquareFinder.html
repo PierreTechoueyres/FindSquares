@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
 <head>
-<!-- 2022-09-20 mar. 21:06 -->
+<!-- 2022-09-20 mar. 23:25 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Recherche de carrés dans un nuage de points</title>
@@ -205,6 +205,15 @@ table tr:nth-child(2n) td{ background-color:#f3f6f6; }
 .org-restclient-variable-name { /* restclient-variable-name-face */ color: #a0132f; }
 .org-restclient-variable-string { /* restclient-variable-string-face */ color: #2544bb; }
 .org-restclient-variable-usage { /* restclient-variable-usage-face */ color: #a0132f; }
+@font-face{
+font-family: 'NerdFontsSymbols Nerd Font';
+src:url("https://www.nerdfonts.com/assets/fonts/Symbols-2048-em Nerd Font Complete.woff2") format("woff2");
+font-weight:normal;
+font-style:normal
+}
+pre.src-sh {
+font-family: 'NerdFontsSymbols Nerd Font', Verdana, Tahoma;
+}
 /*]]>*/-->
 </style>
 </head>
@@ -303,7 +312,7 @@ Exemple : les coordonnées ci-dessous forment un carré valide
 </table>
 
 
-<div id="org6842649" class="figure">
+<div id="orge1e16d9" class="figure">
 <p><img src="Img/example.png" alt="example.png" />
 </p>
 </div>
@@ -323,13 +332,13 @@ Dans l&rsquo;exemple précédent si A = (1, -4) et B = (4, -2) alors il est
 possible de calculer des valeurs pour A&rsquo;, A&rsquo;&rsquo; et B&rsquo;, B&rsquo;&rsquo; telles qu&rsquo;il soit
 possible de former deux carrés.
 </p>
-<pre class="example" id="orgda369fa">
+<pre class="example" id="orgbf407b8">
   A' = (-1, -1) et A" = (3, -7)
   B' = (2, 1) et B" = (6, -5)
 </pre>
 
 
-<div id="org891b241" class="figure">
+<div id="org574be39" class="figure">
 <p><img src="Img/deuxCarrés.png" alt="deuxCarrés.png" />
 </p>
 </div>
@@ -355,7 +364,7 @@ Cela permet d&rsquo;extraire la formule suivante pour calculer
 les coordonnées de A&rsquo; et B&rsquo; :
 </p>
 
-<pre class="example" id="org7df3500">
+<pre class="example" id="org4a1fa10">
   A'.x = A.x - (B.y - A.y)
   A'.y = A.y + (B.x - A.x)
 
@@ -541,8 +550,8 @@ composants séparément.
 </p>
 
 
-<div id="orgac0679b" class="figure">
-<p><img src="./Img/20220419_200712.png" alt="20220419_200712.png" />
+<div id="org966d4b6" class="figure">
+<p><img src="./Img/20220920_230222.png" alt="20220920_230222.png" />
 </p>
 </div>
 </div>
@@ -556,7 +565,7 @@ Soit l&rsquo;ensemble de points suivants :
 </p>
 
 
-<div id="orge6c6848" class="figure">
+<div id="orge8b19db" class="figure">
 <p><img src="Img/onzeCarrésPoints.png" alt="onzeCarrésPoints.png" />
 </p>
 </div>
@@ -565,7 +574,7 @@ Soit l&rsquo;ensemble de points suivants :
 Le résultat est celui-là :
 </p>
 
-<div id="orgbbffd50" class="figure">
+<div id="org5195b61" class="figure">
 <p><img src="Img/onzeCarrés.png" alt="onzeCarrés.png" />
 </p>
 </div>
@@ -591,13 +600,13 @@ First / last  x -1000 / 999.
 First / last  y -743 / 269.
 Found 56 !
 dotnet run ../../exercice.txt  11,01s user 0,20s system 102% cpu 10,899 total
-&#9581;&#9472; &#62218; &#57520; &#61564; ~/Travail/VCS/SquareFinder/SquareFinder &#57520; &#61907; &#61734; master &#57520;      &#57522; &#10004; &#57522; 13s &#62034;
+&#9581;&#9472; &#62218; &#57520; &#61564; ~/Travail/VCS/SquareFinder/SquareFinder &#57520; &#61907; &#61734; master &#57520;                                         &#57522; &#10004; &#57522; 13s &#62034;
 &#9584;&#62803;
 </pre>
 </div>
 
 <p>
-Ce qui donne 56 carrés trouvés en 28 secondes.
+Ce qui donne 56 carrés trouvés en 11 secondes.
 </p>
 </div>
 </div>
@@ -631,7 +640,7 @@ parcours étant très rapide dans ce cas-là ce n&rsquo;est sans doute pas utile
 Visualisation des données founies dans le fichier <code>exercice.txt</code>:
 </p>
 
-<div id="org198b86f" class="figure">
+<div id="org2a9a243" class="figure">
 <p><img src="Img/exercice.png" alt="exercice.png" />
 </p>
 </div>

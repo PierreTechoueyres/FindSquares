@@ -200,7 +200,7 @@ plot "data/deuxCarrés.txt" \
   Un ensemble de tests unitaires a été ajouté pour valider les
   composants séparément.
 
-  [[./Img/20220419_200712.png]]
+  [[./Img/20220920_230222.png]]
 
 * Tests
   Soit l'ensemble de points suivants :
@@ -281,11 +281,11 @@ First / last  x -1000 / 999.
 First / last  y -743 / 269.
 Found 56 !
 dotnet run ../../exercice.txt  11,01s user 0,20s system 102% cpu 10,899 total
-╭─    ~/Travail/VCS/SquareFinder/SquareFinder    master        ✔  13s 
+╭─    ~/Travail/VCS/SquareFinder/SquareFinder    master                                           ✔  13s 
 ╰
   #+end_src
 
-  Ce qui donne 56 carrés trouvés en 28 secondes.
+  Ce qui donne 56 carrés trouvés en 11 secondes.
 
 * Améliorations
   Pour optimiser le temps d'exécution, j'ai l'intuition qu'il est

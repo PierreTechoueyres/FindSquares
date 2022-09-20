@@ -22,7 +22,7 @@ public class ProgramTest
         var fileName = "dummyEmptyFile";
         var fs = new MockFileSystem();
         fs.AddFile(fileName, new MockFileData(""));
-        Program._fileSystem = fs;
+        Program.FileSystem = fs;
         var exitCode = Program.Main(new[] { fileName });
         exitCode.Should().Be(0);
     }
