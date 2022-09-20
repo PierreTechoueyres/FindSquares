@@ -1,7 +1,17 @@
-﻿namespace SquareFinder;
+﻿using System.IO.Abstractions;
+
+namespace SquareFinder;
 
 public static class Program
 {
+    public static IFileSystem? _fileSystem { get; set; }
+
+    private static IFileSystem GetFileSystem()
+    {
+        _fileSystem ??= new FileSystem();
+        return _fileSystem;
+    }
+
     public static int Main(string[] args)
     {
         if (args.Length != 1)
@@ -11,8 +21,13 @@ public static class Program
             return 1;
         }
 
-        if (!File.Exists(args[0])) return 1;
-        var lines = File.ReadLines(args[0]);
+        return FindSquares(GetFileSystem(), args[0]);
+    }
+
+    public static int FindSquares(IFileSystem fileSystem, string fileName)
+    {
+        if (!fileSystem.File.Exists(fileName)) return 1;
+        var lines = fileSystem.File.ReadLines(fileName);
 
         var squareFinder = new SquareFinder();
         squareFinder.LoadPoints(lines);

@@ -2,8 +2,6 @@ namespace SquareFinder;
 
 public class Square
 {
-    public SortedSet<Point> Corners { get; } = new (new PointComparer());
-
     public Square(Point a, Point b, Point c, Point d)
     {
         Corners.Add(new Point(a));
@@ -19,12 +17,22 @@ public class Square
             message += $"c: ({c.X} ; {c.Y}), ";
             message += $"d: ({d.X} ; {d.Y})";
             throw new Exception(message);
-                
         }
+    }
+
+    public SortedSet<Point> Corners { get; } = new(new PointComparer());
+
+    public IEnumerable<Point> getPoints()
+    {
+        var corners = Corners.ToArray();
+        yield return corners[0];
+        yield return corners[1];
+        yield return corners[3];
+        yield return corners[2];
     }
 
     public override string ToString()
     {
-        return string.Join("; ", Corners);
+        return string.Join(" ", getPoints());
     }
 }

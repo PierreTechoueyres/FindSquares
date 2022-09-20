@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.IO.Abstractions.TestingHelpers;
 using FluentAssertions;
 using SquareFinder;
 using Xunit;
@@ -16,30 +17,48 @@ public class ProgramTest
     }
 
     [Fact]
-    public void Run_Main_WithNonExistentFile()
+    public void Run_Main_WithParams()
     {
-        var exitCode = Program.Main(new []{ "dummyFile"});
+        var fileName = "dummyEmptyFile";
+        var fs = new MockFileSystem();
+        fs.AddFile(fileName, new MockFileData(""));
+        Program._fileSystem = fs;
+        var exitCode = Program.Main(new[] { fileName });
+        exitCode.Should().Be(0);
+    }
+
+    [Fact]
+    public void Run_FindSquares_WithoutParams()
+    {
+        var exitCode = Program.FindSquares(new MockFileSystem(), "");
         exitCode.Should().Be(1);
     }
 
     [Fact]
-    public void Run_Main_WithEmptyFile()
+    public void Run_FindSquares_WithNonExistentFile()
     {
-        // TODO: use System.IO.Abstractions (https://github.com/TestableIO/System.IO.Abstractions)
-        var fileName = "dummyEmptyFile";
-        File.WriteAllLines(fileName, Array.Empty<string>());
-        var exitCode = Program.Main(new []{ fileName});
-        exitCode.Should().Be(0);
-        File.Delete(fileName);
+        var fs = new MockFileSystem();
+        var exitCode = Program.FindSquares(fs, "dummyFile");
+        exitCode.Should().Be(1);
     }
 
     [Fact]
-    public void Run_Main_WithDummyFile()
+    public void Run_FindSquares_WithEmptyFile()
     {
-        // TODO: use System.IO.Abstractions (https://github.com/TestableIO/System.IO.Abstractions)
+        var fileName = "dummyEmptyFile";
+        var fs = new MockFileSystem();
+        fs.AddFile(fileName, new MockFileData(""));
+        var exitCode = Program.FindSquares(fs, fileName);
+        exitCode.Should().Be(0);
+    }
+
+    [Fact]
+    public void Run_FindSquares_WithDummyFile()
+    {
         var fileName = "dummyFileWithData";
-        File.WriteAllLines(fileName, new []{ "1 1" });
-        var exitCode = Program.Main(new []{ fileName});
+        var fs = new MockFileSystem();
+        fs.AddFile(fileName, new MockFileData("1 1"));
+        var exitCode = Program.FindSquares(fs, fileName);
         exitCode.Should().Be(0);
         File.Delete(fileName);
     }

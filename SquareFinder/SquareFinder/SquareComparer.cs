@@ -2,7 +2,8 @@ namespace SquareFinder;
 
 public class SquareComparer : IComparer<Square>
 {
-    private readonly PointComparer _comparer = new ();
+    private readonly PointComparer _comparer = new();
+
     public int Compare(Square? x, Square? y)
     {
         if (x is null && y is null) return 0;
@@ -18,11 +19,12 @@ public class SquareComparer : IComparer<Square>
             .FirstOrDefault(result => result != 0);
         */
 
-        for (int i = 0; i < xCorners.Length; i++)
+        for (var i = 0; i < xCorners.Length; i++)
         {
             var result = _comparer.Compare(xCorners[i], yCorners[i]);
             if (result != 0) return result;
         }
+
         return 0;
     }
 }

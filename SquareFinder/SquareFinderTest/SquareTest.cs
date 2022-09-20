@@ -15,6 +15,17 @@ public class SquareTest
     }
 
     [Fact]
+    public void CanGetPoints()
+    {
+        var square = new Square(new Point(-1, -1), new Point(2, 1), new Point(4, 2), new Point(1, -4));
+        square.Corners.Count.Should().Be(4);
+        square.getPoints().Should().BeEquivalentTo(new[]
+        {
+            new Point(-1, -1), new Point(2, 1), new Point(4, 2), new Point(1, -4)
+        });
+    }
+
+    [Fact]
     public void CanThrowExceptionWhenBuildingAnInvalidSquare()
     {
         var constructor = () =>

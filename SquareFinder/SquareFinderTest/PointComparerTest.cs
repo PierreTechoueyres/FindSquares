@@ -6,7 +6,6 @@ namespace SquareFinderTest;
 
 public class PointComparerTest
 {
-   
     [Fact]
     public void CanCompareTwoPoints()
     {
@@ -21,5 +20,4 @@ public class PointComparerTest
 
         comparer.Compare(point1, point2).Should().BeLessOrEqualTo(-1);
     }
-  
 }

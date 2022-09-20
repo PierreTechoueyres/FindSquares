@@ -20,5 +20,4 @@ public class SquareComparerTest
 
         comparer.Compare(square1, square2).Should().BeLessOrEqualTo(-1); // square2 < square 1.
     }
-    
 }

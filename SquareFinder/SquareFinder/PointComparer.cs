@@ -11,6 +11,6 @@ public class PointComparer : IComparer<Point>
         var yDelta = a.Y - b.Y;
         var xDelta = a.X - b.X;
 
-        return yDelta == 0 ? xDelta : yDelta ;
+        return yDelta == 0 ? xDelta : yDelta;
     }
 }
