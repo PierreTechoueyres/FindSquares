@@ -53,7 +53,18 @@ public class ProgramTest
     }
 
     [Fact]
-    public void Run_FindSquares_WithDummyFile()
+    public void Run_FindSquares_WithInvalidData()
+    {
+        var fileName = "dummyFileWithData";
+        var fs = new MockFileSystem();
+        fs.AddFile(fileName, new MockFileData("1 a"));
+        var exitCode = Program.FindSquares(fs, fileName);
+        exitCode.Should().Be(0);
+        File.Delete(fileName);
+    }
+
+    [Fact]
+    public void Run_FindSquares_WithData()
     {
         var fileName = "dummyFileWithData";
         var fs = new MockFileSystem();
