@@ -16,7 +16,7 @@ public class Square
             message += $"b: ({b.X} ; {b.Y}), ";
             message += $"c: ({c.X} ; {c.Y}), ";
             message += $"d: ({d.X} ; {d.Y})";
-            throw new Exception(message);
+            throw new SquareException(message);
         }
     }
 
