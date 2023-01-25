@@ -34,29 +34,24 @@ public class SquareFinder
         var aIndex = 0;
         var orderedPoints = Points.ToArray();
 
-        // var solutions = new SortedSet<Square>(new SquareComparer());
         var solutions = new HashSet<Square>();
+
+        var cornerAPrime = new Point();
+        var cornerBPrime = new Point();
 
         foreach (var cornerA in Points)
         {
             ++aIndex;
-            var cornerAPrime = new Point();
-            var cornerBPrime = new Point();
-
             for (var bIndex = aIndex; bIndex < orderedPoints.Length; bIndex++)
             {
                 var cornerB = orderedPoints[bIndex];
 
                 if (cornerA.X >= cornerB.X) continue;
 
-                cornerAPrime.X = cornerA.X - (cornerB.Y - cornerA.Y);
-                cornerAPrime.Y = cornerA.Y + (cornerB.X - cornerA.X);
+                (cornerAPrime.X, cornerAPrime.Y) = cornerA.CalculatePrime(cornerB);
+                (cornerBPrime.X, cornerBPrime.Y) = cornerB.CalculatePrime(cornerA);
 
-                cornerBPrime.X = cornerB.X - (cornerB.Y - cornerA.Y);
-                cornerBPrime.Y = cornerB.Y + (cornerB.X - cornerA.X);
-
-                if (!Points.Contains(cornerAPrime)) continue;
-                if (!Points.Contains(cornerBPrime)) continue;
+                if (!Points.Contains(cornerAPrime) ||!Points.Contains(cornerBPrime)) continue;
 
                 var square = new Square(cornerA, cornerB, cornerAPrime, cornerBPrime);
                 solutions.Add(square);

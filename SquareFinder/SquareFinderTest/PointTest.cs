@@ -21,4 +21,22 @@ public class PointTest
         point.X.Should().Be(-1);
         point.Y.Should().Be(2);
     }
+
+    [Fact]
+    public void CanCalculatePrime()
+    {
+        var a = new Point(1, -4);
+        var b = new Point(4, -2);
+
+        var aa = new Point();
+        var bb = new Point();
+
+        (aa.X, aa.Y) = a.CalculatePrime(b);
+        aa.X.Should().Be(-1);
+        aa.Y.Should().Be(-1);
+
+        (bb.X, bb.Y) = b.CalculatePrime(a);
+        bb.X.Should().Be(2);
+        bb.Y.Should().Be(1);
+    }
 }

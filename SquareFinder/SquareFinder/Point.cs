@@ -25,4 +25,9 @@ public class Point
     {
         return $"({X}, {Y})";
     }
+
+    public (int X, int Y) CalculatePrime(Point b )
+    {
+        return (X - Math.Abs(Y - b.Y), Y + Math.Abs(X - b.X));
+    }
 }
