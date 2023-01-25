@@ -15,19 +15,17 @@ public class SquareFinder
         foreach (var line in lines)
         {
             var elements = line.Split(" ");
-            if (elements.Length >= 2
-                && int.TryParse(elements[0], out var x)
-                && int.TryParse(elements[1], out var y))
-            {
-                MinX = MinX < x ? MinX : x;
-                MaxX = MaxX > x ? MaxX : x;
-                MinY = MinY < x ? MinY : y;
-                MaxY = MaxY > x ? MaxY : y;
+            if (elements.Length < 2
+                || !int.TryParse(elements[0], out var x)
+                || !int.TryParse(elements[1], out var y)) continue;
+            MinX = MinX < x ? MinX : x;
+            MaxX = MaxX > x ? MaxX : x;
+            MinY = MinY < x ? MinY : y;
+            MaxY = MaxY > x ? MaxY : y;
 
-                var point = new Point(x, y);
-                if (!Points.Contains(point))
-                    Points.Add(point);
-            }
+            var point = new Point(x, y);
+            if (!Points.Contains(point))
+                Points.Add(point);
         }
     }
 
