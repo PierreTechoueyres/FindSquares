@@ -34,7 +34,6 @@ public static class Program
         if (squareFinder.Points.Any())
         {
             Console.WriteLine($"List of points contains {squareFinder.Points.Count} elements.");
-            // Console.WriteLine(String.Join(", ", squareFinder.Points));
 
             Console.WriteLine($"First / last  point {squareFinder.Points.First()} / {squareFinder.Points.Last()}.");
             Console.WriteLine($"First / last  x {squareFinder.MinX} / {squareFinder.MaxX}.");
@@ -42,7 +41,6 @@ public static class Program
 
             var solutions = squareFinder.FindSquares();
             Console.WriteLine($"Found {solutions.Count} !");
-            // Console.WriteLine(String.Join("\n", solutions));
         }
 
         return 0;

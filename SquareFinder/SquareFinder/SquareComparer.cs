@@ -13,12 +13,6 @@ public class SquareComparer : IComparer<Square>
         var xCorners = x.Corners.ToArray();
         var yCorners = y.Corners.ToArray();
 
-        /* LINQ-expression
-        return xCorners
-            .Select((t, i) => _comparer.Compare(t, yCorners[i]))
-            .FirstOrDefault(result => result != 0);
-        */
-
         for (var i = 0; i < xCorners.Length; i++)
         {
             var result = _comparer.Compare(xCorners[i], yCorners[i]);
