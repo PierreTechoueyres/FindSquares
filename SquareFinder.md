@@ -31,7 +31,7 @@ Exemple : les coordonnées ci-dessous forment un carré valide
 | -1 | -1 | D     |
 | 2  | 1  | C     |
 
-![img](Img/example.png)
+![img](Img/exemple.png)
 
 
 <a id="analyse"></a>
@@ -148,6 +148,11 @@ public class Point
     {
         return $"({X}, {Y})";
     }
+
+    public (int X, int Y) CalculatePrime(Point b )
+    {
+        return (X - Math.Abs(Y - b.Y), Y + Math.Abs(X - b.X));
+    }
 }
 ```
 
@@ -160,14 +165,16 @@ public class PointComparer : IComparer<Point>
 {
     public int Compare(Point? a, Point? b)
     {
-        if (a is null && b is null) return 0;
-        if (a is null) return -1;
-        if (b is null) return 1;
-
-        var yDelta = a.Y - b.Y;
-        var xDelta = a.X - b.X;
-
-        return yDelta == 0 ? xDelta : yDelta;
+        switch (a, b)
+        {
+            case (a: null, b: null): return 0;
+            case (a: null, b: _): return -1;
+            case (a: _, b: null): return 1;
+            default:
+                var yDelta = a.Y - b.Y;
+                var xDelta = a.X - b.X;
+                return yDelta == 0 ? xDelta : yDelta;
+        }
     }
 }
 ```
@@ -189,7 +196,7 @@ Il y a sans doute une amélioration à ajouter pour détecter ce cas pour évite
 
 Un ensemble de tests unitaires a été ajouté pour valider les composants séparément.
 
-![img](./Img/20220920_230222.png)
+![img](./Img/20230126_010124.png)
 
 
 <a id="tests"></a>
@@ -246,6 +253,6 @@ J&rsquo;ai exclu les améliorations suivantes :
 
 # Divers
 
-Visualisation des données founies dans le fichier `exercice.txt`:
+Visualisation des données fournies dans le fichier `exercice.txt`:
 
 ![img](Img/exercice.png)

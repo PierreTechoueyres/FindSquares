@@ -20,7 +20,8 @@ x y
   S'il n'y en a pas comment le démontrer ?
 
   Exemple : les coordonnées ci-dessous forment un carré valide
-  #+tblname: example-data
+  #+tblname: exemple-data
+  #+caption: exemple
   |----+----+-------|
   |  x |  y | label |
   |----+----+-------|
@@ -30,7 +31,7 @@ x y
   |  2 |  1 | C     |
   |----+----+-------|
 
-  #+begin_src gnuplot :var data=example-data :file Img/example.png
+  #+begin_src gnuplot :var data=exemple-data :file Img/exemple.png
 reset
 
 set xrange [-2:5]
@@ -45,7 +46,7 @@ plot data using 1:2 with points notitle , '' using 1:($2+0.25):3 with labels not
 #+end_src
 
   #+RESULTS:
-  [[file:Img/example.png]]
+  [[file:Img/exemple.png]]
 
 * Analyse
   Pour chaque coupe de points (A, B) dans le plan il est possible de
@@ -200,12 +201,12 @@ plot "data/deuxCarrés.txt" \
   Un ensemble de tests unitaires a été ajouté pour valider les
   composants séparément.
 
-  [[./Img/20220920_230222.png]]
+  [[./Img/20230126_010124.png]]
 
 * Tests
   Soit l'ensemble de points suivants :
 
-  #+begin_src gnuplot :var data=example-data :file Img/onzeCarrésPoints.png
+  #+begin_src gnuplot :var data=exemple-data :file Img/onzeCarrésPoints.png
 reset
 
 set xrange [-1:4]
@@ -300,7 +301,7 @@ dotnet run ../../exercice.txt  11,01s user 0,20s system 102% cpu 10,899 total
     parcours étant très rapide dans ce cas-là ce n'est sans doute pas utile).
 
 * Divers
-  Visualisation des données founies dans le fichier =exercice.txt=:
+  Visualisation des données fournies dans le fichier =exercice.txt=:
   #+begin_src gnuplot :file Img/exercice.png
 reset
 set size square
